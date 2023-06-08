@@ -33,7 +33,7 @@ class FeatureExtractor(Module):
         return x
 
     def forward(self, x):
-        print(x.size())
+        # print(x.size())
         # Apply conv layers
         features = self.cnn(x)
 
@@ -160,7 +160,7 @@ class CRNN(Module):
             # )
 
             loss = ctc_loss(
-                log_probs=log_softmax_values,  # (T, N, C)
+                log_probs=log_softmax_values.cpu(),  # (T, N, C)
                 targets=targets,  # N, S or sum(target_lengths)
                 input_lengths=input_lengths,  # N
                 target_lengths=seq_len,
