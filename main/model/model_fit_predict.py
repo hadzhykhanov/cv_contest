@@ -41,7 +41,9 @@ def evaluate_model(model, data_loader, device):
 
 
 def save_model(model, output_model_path):
-    torch.save(model, output_model_path)
+    torch.save(model.state_dict(), output_model_path)
+
+    # torch.save(model, output_model_path)
 
 
 def save_metrics(metrics, output_metrics_path):
