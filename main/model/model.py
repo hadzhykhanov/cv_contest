@@ -5,7 +5,7 @@ from torchvision import models
 
 
 class FeatureExtractor(Module):
-    def __init__(self, input_size=(32, 128), output_len=120):
+    def __init__(self, input_size=(64, 320), output_len=120):
         super(self.__class__, self).__init__()
 
         h, w = input_size
@@ -118,7 +118,7 @@ class CRNN(Module):
     def __init__(
         self,
         num_chars,
-        cnn_input_size=(32, 128),
+        cnn_input_size=(64, 320),
         cnn_output_len=120,
         rnn_hidden_size=512,
         rnn_num_layers=3,
