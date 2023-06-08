@@ -121,7 +121,7 @@ class CRNN(Module):
         cnn_input_size=(64, 320),
         cnn_output_len=120,
         rnn_hidden_size=512,
-        rnn_num_layers=3,
+        rnn_num_layers=2,
         rnn_dropout=0.05,
         rnn_bidirectional=True,
     ):
