@@ -16,6 +16,7 @@ class DataConfig:
     output_model_path: str
     output_metrics_path: str
     output_predictions_path: str
+    output_encoder_path: str
     test_size: float
     random_state: int
 

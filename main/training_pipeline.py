@@ -8,6 +8,7 @@ from omegaconf import DictConfig
 from sklearn.preprocessing import LabelEncoder
 from model.predictions_preprocessing import preprocess_prediction, decode_predictions
 from model.model import CRNN
+from joblib import dump
 from entities import entities
 from pprint import pprint
 from model.model_fit_predict import (
@@ -45,6 +46,7 @@ def run_training(config: DictConfig):
 
     label_encoder = LabelEncoder()
     label_encoder.fit(targets_flattened)
+    dump(label_encoder, config.data_params.output_encoder_path)
     targets_encoded = [
         [val + 1 for val in label_encoder.transform(target)]
         for target in targets_splitted
