@@ -2,7 +2,6 @@ import os
 import torch
 import hydra
 import torchmetrics
-import numpy as np
 from hydra.core.config_store import ConfigStore
 from data.make_dataset import read_data, split_train_test_data, make_loaders
 from omegaconf import DictConfig
