@@ -16,7 +16,7 @@ data_params:
   output_model_path: "/ocr_model.pth"
   output_metrics_path: "metrics.json"
   output_predictions_path: "predictions.csv"
-  output_encoder_path: "label_encoder.joblib"
+  output_encoder_path: "/label_encoder.joblib"
 
   test_size: 0.1
   random_state: ${general.random_state}
