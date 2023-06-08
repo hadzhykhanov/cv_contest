@@ -5,7 +5,7 @@ from torchvision import models
 
 
 class FeatureExtractor(Module):
-    def __init__(self, input_size=(64, 320), output_len=120):
+    def __init__(self, input_size=(64, 320), output_len=100):
         super(self.__class__, self).__init__()
 
         h, w = input_size
