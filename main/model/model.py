@@ -120,10 +120,10 @@ class CRNN(Module):
         num_chars,
         cnn_input_size=(64, 320),
         cnn_output_len=100,
-        rnn_hidden_size=128,
-        rnn_num_layers=1,
+        rnn_hidden_size=512,
+        rnn_num_layers=2,
         rnn_dropout=0.05,
-        rnn_bidirectional=False,
+        rnn_bidirectional=True,
     ):
         super(self.__class__, self).__init__()
 
