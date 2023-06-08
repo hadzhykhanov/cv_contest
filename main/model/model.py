@@ -164,6 +164,7 @@ class CRNN(Module):
                 targets=targets,  # N, S or sum(target_lengths)
                 input_lengths=input_lengths,  # N
                 target_lengths=seq_len,
+                zero_infinity=True,
             )  # N
             # print(target_lengths)
             # loss = nn.CTCLoss(blank=0)(
