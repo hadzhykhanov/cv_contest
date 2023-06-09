@@ -16,6 +16,13 @@ class OCRDataset(Dataset):
         img = Image.open(file).convert("RGB")
         img = np.array(img)
 
+        img_height, img_width = img.shape[0], img.shape[1]
+        if img_height > img_width:
+            img = np.transpose(img, (1, 0, 2))
+            img = np.flip(img, axis=1)
+
+            # img = torch.from_numpy(img).permute(1, 0, 2).flip(1).numpy()
+
         if self.transform is not None:
             img = self.transform(image=img)["image"]
 
