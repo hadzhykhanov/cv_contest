@@ -41,7 +41,7 @@ def read_data(
         if img_arr.shape[0] * 3 <= img_arr.shape[1]:
             out_list.append(local_path)
 
-    labels = pd.read_csv(rotation_labels_path).values
+    labels = pd.read_csv(rotation_labels_path).values.ravel()
 
     return out_list, labels
 
@@ -65,10 +65,10 @@ def make_loaders(
     test_labels,
     test_batch_size,
 ):
-    print(
-        train_labels,
-        test_labels,
-    )
+    # print(
+    #     type(train_labels[:5]),
+    #     type(test_labels[:5]),
+    # )
     train_transform = albumentations.Compose(
         [
             albumentations.Resize(64, 320),

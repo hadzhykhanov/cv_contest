@@ -1,12 +1,11 @@
 import numpy as np
 import torch
 from PIL import Image
-import random
 from torch.utils.data.dataset import Dataset
 
 
 class RotationDataset(Dataset):
-    def __init__(self, file_list, transform, target_list=None):
+    def __init__(self, file_list, transform, target_list):
         self.file_list = file_list
         self.transform = transform
         self.target_list = target_list
@@ -34,7 +33,7 @@ class RotationDataset(Dataset):
 
         img = torch.tensor(img)
         img = img.permute(2, 0, 1).float()
-
+        # print(f"In dataset: {type(target)}")
         return {"image": img, "target": target}
 
     def __len__(self):

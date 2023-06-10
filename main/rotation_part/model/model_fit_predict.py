@@ -33,7 +33,7 @@ def evaluate_model(model, data_loader, device):
             for key, value in data.items():
                 data[key] = value.to(device)
 
-            batch_preds, loss = model(data["image"], ["target"])
+            batch_preds, loss = model(data["image"], data["target"])
             test_loss += loss.item()
             test_preds.extend(batch_preds.armax(dim=1))
 
