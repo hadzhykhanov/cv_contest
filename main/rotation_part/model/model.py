@@ -11,6 +11,7 @@ class ResNet18(Module):
         self.resnet.fc = torch.nn.Linear(self.resnet.fc.in_features, num_classes)
 
     def forward(self, images, targets=None):
+        print(type(targets))
         x = self.resnet(images)
 
         if targets is not None:
