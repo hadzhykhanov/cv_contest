@@ -68,12 +68,12 @@ def run_training(config: DictConfig):
     )
 
     for epoch in range(1, config.training_params.epochs_num + 1):
-        # train_loss = train_model(
-        #     model=model,
-        #     data_loader=train_loader,
-        #     optimizer=optimizer,
-        #     device=config.training_params.device,
-        # )
+        train_loss = train_model(
+            model=model,
+            data_loader=train_loader,
+            optimizer=optimizer,
+            device=config.training_params.device,
+        )
 
         test_preds, test_loss = evaluate_model(
             model=model, data_loader=test_loader, device=config.training_params.device
