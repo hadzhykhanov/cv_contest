@@ -28,9 +28,7 @@ config_store = ConfigStore.instance()
 config_store.store(name="config", node=entities.Config)
 
 
-@hydra.main(
-    version_base=None, config_path="../../configs/ocr_part", config_name="config"
-)
+@hydra.main(version_base=None, config_path="../../configs", config_name="ocr_config")
 def run_training(config: DictConfig):
     (
         train_files,

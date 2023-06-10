@@ -25,7 +25,7 @@ config_store.store(name="config", node=entities.Config)
 
 
 @hydra.main(
-    version_base=None, config_path="../../configs/rotation_part", config_name="config"
+    version_base=None, config_path="../../configs/", config_name="rotation_config"
 )
 def run_training(config: DictConfig):
     file_list, labels = read_data(
