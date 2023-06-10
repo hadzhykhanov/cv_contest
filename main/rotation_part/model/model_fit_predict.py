@@ -35,7 +35,7 @@ def evaluate_model(model, data_loader, device):
 
             batch_preds, loss = model(data["image"], data["target"])
             test_loss += loss.item()
-            test_preds.extend(batch_preds.argmax(dim=1).item())
+            test_preds.extend(batch_preds.argmax(dim=1).cpu().numpy())
 
     return test_preds, test_loss / len(data_loader)
 
