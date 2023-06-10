@@ -68,12 +68,12 @@ def run_training(config: DictConfig):
     )
 
     for epoch in range(1, config.training_params.epochs_num + 1):
-        train_loss = train_model(
-            model=model,
-            data_loader=train_loader,
-            optimizer=optimizer,
-            device=config.training_params.device,
-        )
+        # train_loss = train_model(
+        #     model=model,
+        #     data_loader=train_loader,
+        #     optimizer=optimizer,
+        #     device=config.training_params.device,
+        # )
 
         test_preds, test_loss = evaluate_model(
             model=model, data_loader=test_loader, device=config.training_params.device
@@ -82,7 +82,8 @@ def run_training(config: DictConfig):
         accuracy = accuracy_score(test_labels, test_preds)
         f1 = f1_score(test_labels, test_preds)
 
-        print(f"{epoch=}, {train_loss=}, {test_loss=}, {accuracy=}, {f1=}")
+        # print(f"{epoch=}, {train_loss=}, {test_loss=}, {accuracy=}, {f1=}")
+        print(f"{epoch=}, {test_loss=}, {accuracy=}, {f1=}")
 
         scheduler.step(test_loss)
 
