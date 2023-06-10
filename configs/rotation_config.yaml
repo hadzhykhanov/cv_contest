@@ -11,7 +11,7 @@ data_params:
   input_ocr_targets_path: "/kaggle/working/cv_contest/data/vk_made_ocr/train_labels_no_nan.csv"
 #  input_ocr_targets_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/train_labels_no_nan.csv"
   id_column_name: "Id"
-  rotation_labels_path: "kaggle/working/cv_contest/data/vk_made_ocr/rotation_labels.csv"
+  rotation_labels_path: "/kaggle/working/cv_contest/data/vk_made_ocr/rotation_labels.csv"
 #  rotation_labels_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/rotation_labels.csv"
 
   output_model_path: "rotation_model.pth"
