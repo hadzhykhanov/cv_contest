@@ -1,5 +1,6 @@
 venv
-data/vk_made_ocr
+data/vk_made_ocr/train
+data/vk_made_ocr/test
 data/vk_made_ocr.zip
 .idea
 notebooks/.ipynb_checkpoints
