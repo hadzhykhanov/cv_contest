@@ -4,11 +4,11 @@ defaults:
 #  - override hydra/job_logging: colorlog
 
 data_params:
-  input_train_data_path: "/kaggle/working/train/train"
+  input_train_folder_path: "/kaggle/working/train/train"
 #  input_train_folder_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/train/train"
-  input_val_data_path: "/kaggle/working/test/test"
+  input_val_folder_path: "/kaggle/working/test/test"
 #  input_test_folder_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/test/test"
-  input_targets_path: "/kaggle/working/train_labels_no_nan.csv"
+  input_ocr_targets_path: "/kaggle/working/train_labels_no_nan.csv"
 #  input_ocr_targets_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/train_labels_no_nan.csv"
   id_column_name: "Id"
   rotation_labels_path: "kaggle/working/rotation_labels.csv"
