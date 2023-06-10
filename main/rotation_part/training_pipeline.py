@@ -79,8 +79,9 @@ def run_training(config: DictConfig):
             model=model, data_loader=test_loader, device=config.training_params.device
         )
 
-        accuracy = accuracy_score(test_labels, test_preds.cpu().numpy())
-        f1 = f1_score(test_labels, test_preds.cpu().numpy())
+        print(type(test_labels), type(test_preds))
+        accuracy = accuracy_score(test_labels.cpu().numpy(), test_preds)
+        f1 = f1_score(test_labels.cpu().numpy(), test_preds)
 
         # print(f"{epoch=}, {train_loss=}, {test_loss=}, {accuracy=}, {f1=}")
         print(f"{epoch=}, {test_loss=}, {accuracy=}, {f1=}")
