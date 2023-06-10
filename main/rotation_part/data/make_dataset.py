@@ -65,6 +65,10 @@ def make_loaders(
     test_labels,
     test_batch_size,
 ):
+    print(
+        train_labels,
+        test_labels,
+    )
     train_transform = albumentations.Compose(
         [
             albumentations.Resize(64, 320),
