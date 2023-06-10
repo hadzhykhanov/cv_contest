@@ -1,0 +1,39 @@
+defaults:
+  - general: general
+#  - override hydra/hydra_logging: colorlog
+#  - override hydra/job_logging: colorlog
+
+data_params:
+  input_train_data_path: "/kaggle/working/train/train"
+#  input_train_folder_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/train/train"
+  input_val_data_path: "/kaggle/working/test/test"
+#  input_test_folder_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/test/test"
+  input_targets_path: "/kaggle/working/train_labels_no_nan.csv"
+#  input_ocr_targets_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/train_labels_no_nan.csv"
+  id_column_name: "Id"
+  rotation_labels_path: "kaggle/working/rotation_labels.csv"
+#  rotation_labels_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/rotation_labels.csv"
+
+  output_model_path: "rotation_model.pth"
+  output_metrics_path: "metrics.json"
+  output_predictions_path: "predictions.csv"
+
+  test_size: 0.05
+  random_state: ${general.random_state}
+
+training_params:
+  num_classes: 2
+  epochs_num: 10
+  train_batch_size: 128
+  test_batch_size: 128
+  learning_rate: 5e-4
+  factor: 0.9
+  patience: 2
+  device: "cuda"
+
+hydra:
+  run:
+    dir: ../artifacts/${now:%Y-%m-%d_%H-%M-%S}
+  sweep:
+    dir: ../artifacts/${now:%Y-%m-%d_%H-%M-%S}
+    subdir: ${hydra.job.override_dirname}
