@@ -14,9 +14,9 @@ data_params:
   rotation_labels_path: "/kaggle/working/cv_contest/data/vk_made_ocr/rotation_labels.csv"
 #  rotation_labels_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/rotation_labels.csv"
 
-  output_model_path: "rotation_model.pth"
-  output_metrics_path: "metrics.json"
-  output_predictions_path: "predictions.csv"
+  output_model_path: "/kaggle/working/rotation_model.pth"
+  output_metrics_path: "/kaggle/working/metrics.json"
+  output_predictions_path: "/kaggle/working/predictions.csv"
 
   test_size: 0.05
   random_state: ${general.random_state}

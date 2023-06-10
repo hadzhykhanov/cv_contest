@@ -81,14 +81,13 @@ def run_training(config: DictConfig):
 
         # print(test_labels[:5], test_preds[:5])
         accuracy = accuracy_score(test_labels, test_preds)
-        f1 = f1_score(test_labels, test_preds)
 
         # print(f"{epoch=}, {train_loss=}, {test_loss=}, {accuracy=}, {f1=}")
-        print(f"{epoch=}, {test_loss=}, {accuracy=}, {f1=}")
+        print(f"{epoch=}, {test_loss=}, {accuracy=}")
 
         scheduler.step(test_loss)
 
-    metrics = {"test_loss": test_loss, "accuracy": accuracy, "f1_score": f1}
+    metrics = {"test_loss": test_loss, "accuracy": accuracy}
     save_model(model=model, output_model_path=config.data_params.output_model_path)
     save_metrics(
         metrics=metrics,
