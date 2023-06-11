@@ -78,6 +78,8 @@ def run_training(config: DictConfig):
         test_files=test_files,
         test_encoded_targets=test_encoded_targets,
         test_batch_size=config.training_params.test_batch_size,
+        train_rotation_scoring_dct=train_rotation_scoring_dct,
+        test_rotation_scoring_dct=test_rotation_scoring_dct,
     )
 
     # for data in train_loader:
