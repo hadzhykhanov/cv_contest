@@ -6,7 +6,6 @@ import albumentations
 import os
 from sklearn.model_selection import train_test_split
 from data.dataset import RotationDataset
-from torch.utils.data import DataLoader
 
 
 def read_data(
