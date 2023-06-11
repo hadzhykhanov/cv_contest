@@ -24,8 +24,8 @@ class OCRDataset(Dataset):
         if img_height > img_width * 2:
             img = np.transpose(img, (1, 0, 2))
 
-        if rotation_score == 1:
-            img = np.flip(img, axis=1)
+            if rotation_score == 1:
+                img = np.flip(img, axis=1)
 
         if self.transform is not None:
             img = self.transform(image=img)["image"]

@@ -15,7 +15,7 @@ def read_data(
     id_column_name,
     target_column_name,
     train_rotation_scoring_path,
-    test_rotation_scoring_path,
+    val_rotation_scoring_path,
 ):
     train_files_path, val_files_path = pathlib.Path(
         input_train_data_path
@@ -45,7 +45,7 @@ def read_data(
             targets_flattened.update(target)
 
     train_rotation_scoring_df = pd.read_csv(train_rotation_scoring_path)
-    test_rotation_scoring_df = pd.read_csv(test_rotation_scoring_path)
+    test_rotation_scoring_df = pd.read_csv(val_rotation_scoring_path)
     train_rotation_scoring_dct = dict(
         zip(train_rotation_scoring_df["id"], train_rotation_scoring_df["label"])
     )
@@ -117,7 +117,6 @@ def make_loaders(
     test_files,
     test_encoded_targets,
     test_batch_size,
-    test_rotation_scoring_dct,
 ):
     train_transform = albumentations.Compose(
         [
@@ -145,7 +144,7 @@ def make_loaders(
         file_list=test_files,
         targets_encoded=test_encoded_targets,
         transform=test_transform,
-        rotation_scoring=test_rotation_scoring_dct,
+        rotation_scoring=train_rotation_scoring_dct,
     )
 
     test_loader = DataLoader(

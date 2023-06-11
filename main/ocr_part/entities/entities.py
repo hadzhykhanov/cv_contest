@@ -18,7 +18,7 @@ class DataConfig:
     output_predictions_path: str
     output_encoder_path: str
     train_rotation_scoring_path: str
-    test_rotation_scoring_path: str
+    val_rotation_scoring_path: str
     test_size: float
     random_state: int
 
