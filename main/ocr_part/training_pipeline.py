@@ -36,12 +36,16 @@ def run_training(config: DictConfig):
         targets_orig,
         targets_splitted,
         targets_flattened,
+        train_rotation_scoring_dct,
+        test_rotation_scoring_dct,
     ) = read_data(
         input_train_data_path=config.data_params.input_train_data_path,
         input_val_data_path=config.data_params.input_val_data_path,
         input_targets_path=config.data_params.input_targets_path,
         id_column_name=config.data_params.id_column_name,
         target_column_name=config.data_params.target_column_name,
+        train_rotation_scoring_path=config.data_params.train_rotation_scoring_path,
+        test_rotation_scoring_path=config.data_params.test_rotation_scoring_path,
     )
 
     label_encoder = LabelEncoder()

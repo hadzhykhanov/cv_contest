@@ -14,6 +14,8 @@ def read_data(
     input_targets_path,
     id_column_name,
     target_column_name,
+    train_rotation_scoring_path,
+    test_rotation_scoring_path,
 ):
     train_files_path, val_files_path = pathlib.Path(
         input_train_data_path
@@ -42,12 +44,24 @@ def read_data(
             targets_splitted.append(list(target))
             targets_flattened.update(target)
 
+    train_rotation_scoring_df = pd.read_csv(train_rotation_scoring_path)
+    test_rotation_scoring_df = pd.read_csv(test_rotation_scoring_path)
+    train_rotation_scoring_dct = dict(
+        zip(train_rotation_scoring_df["id"], train_rotation_scoring_df["label"])
+    )
+
+    test_rotation_scoring_dct = dict(
+        zip(train_rotation_scoring_df["Id"], train_rotation_scoring_df["label"])
+    )
+
     return (
         train_files,
         val_files,
         targets_orig,
         targets_splitted,
         list(targets_flattened),
+        train_rotation_scoring_dct,
+        test_rotation_scoring_dct,
     )
 
 
@@ -99,9 +113,11 @@ def make_loaders(
     train_files,
     train_encoded_targets,
     train_batch_size,
+    train_rotation_scoring_dct,
     test_files,
     test_encoded_targets,
     test_batch_size,
+    test_rotation_scoring_dct,
 ):
     train_transform = albumentations.Compose(
         [
@@ -113,6 +129,7 @@ def make_loaders(
         file_list=train_files,
         targets_encoded=train_encoded_targets,
         transform=train_transform,
+        train_rotation_scoring_dct=train_rotation_scoring_dct,
     )
 
     train_loader = DataLoader(
@@ -128,6 +145,7 @@ def make_loaders(
         file_list=test_files,
         targets_encoded=test_encoded_targets,
         transform=test_transform,
+        test_rotation_scoring_dct=test_rotation_scoring_dct,
     )
 
     test_loader = DataLoader(

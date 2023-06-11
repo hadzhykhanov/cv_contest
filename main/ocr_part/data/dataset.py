@@ -1,3 +1,5 @@
+import os.path
+
 import numpy as np
 import torch
 from PIL import Image
@@ -5,22 +7,25 @@ from torch.utils.data.dataset import Dataset
 
 
 class OCRDataset(Dataset):
-    def __init__(self, file_list, targets_encoded, transform):
+    def __init__(self, file_list, targets_encoded, rotation_scoring, transform):
         self.file_list = file_list
         self.targets_encoded = targets_encoded
         self.transform = transform
+        self.rotation_scoring = rotation_scoring
 
     def __getitem__(self, idx):
         file, target = self.file_list[idx], self.targets_encoded[idx]
+        rotation_score = self.rotation_scoring[os.path.basename(file)]
+
         img = Image.open(file).convert("RGB")
         img = np.array(img)
 
         img_height, img_width = img.shape[0], img.shape[1]
-        if img_height > img_width:
+        if img_height > img_width * 2:
             img = np.transpose(img, (1, 0, 2))
-            img = np.flip(img, axis=1)
 
-            # img = torch.from_numpy(img).permute(1, 0, 2).flip(1).numpy()
+        if rotation_score == 1:
+            img = np.flip(img, axis=1)
 
         if self.transform is not None:
             img = self.transform(image=img)["image"]

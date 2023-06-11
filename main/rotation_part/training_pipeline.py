@@ -5,7 +5,7 @@ from hydra.core.config_store import ConfigStore
 from data.make_dataset import read_data, split_train_test_data, make_loaders
 from omegaconf import DictConfig
 from model.model import ResNet18
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import accuracy_score
 from entities import entities
 from model.model_fit_predict import (
     train_model,
@@ -82,8 +82,7 @@ def run_training(config: DictConfig):
         # print(test_labels[:5], test_preds[:5])
         accuracy = accuracy_score(test_labels, test_preds)
 
-        # print(f"{epoch=}, {train_loss=}, {test_loss=}, {accuracy=}, {f1=}")
-        print(f"{epoch=}, {test_loss=}, {accuracy=}")
+        print(f"{epoch=}, {train_loss=}, {test_loss=}, {accuracy=}=")
 
         scheduler.step(test_loss)
 
