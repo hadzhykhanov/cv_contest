@@ -129,7 +129,7 @@ def make_loaders(
         file_list=train_files,
         targets_encoded=train_encoded_targets,
         transform=train_transform,
-        train_rotation_scoring_dct=train_rotation_scoring_dct,
+        rotation_scoring=train_rotation_scoring_dct,
     )
 
     train_loader = DataLoader(
@@ -145,7 +145,7 @@ def make_loaders(
         file_list=test_files,
         targets_encoded=test_encoded_targets,
         transform=test_transform,
-        test_rotation_scoring_dct=test_rotation_scoring_dct,
+        rotation_scoring=test_rotation_scoring_dct,
     )
 
     test_loader = DataLoader(
