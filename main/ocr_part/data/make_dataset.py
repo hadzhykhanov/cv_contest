@@ -51,7 +51,7 @@ def read_data(
     )
 
     test_rotation_scoring_dct = dict(
-        zip(train_rotation_scoring_df["Id"], train_rotation_scoring_df["label"])
+        zip(train_rotation_scoring_df["id"], train_rotation_scoring_df["label"])
     )
 
     return (
