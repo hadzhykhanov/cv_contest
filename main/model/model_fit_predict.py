@@ -22,20 +22,20 @@ def train_model(model, data_loader, optimizer, device):
     return train_loss / len(data_loader)
 
 
+@torch.no_grad()
 def evaluate_model(model, data_loader, device):
     model.eval()
     test_loss = 0
     test_preds = []
 
-    with torch.no_grad():
-        tk = tqdm(data_loader, total=len(data_loader))
-        for data in tk:
-            for key, value in data.items():
-                data[key] = value.to(device)
+    tk = tqdm(data_loader, total=len(data_loader))
+    for data in tk:
+        for key, value in data.items():
+            data[key] = value.to(device)
 
-            batch_preds, loss = model(data["image"], data["seq"], data["seq_len"])
-            test_loss += loss.item()
-            test_preds.append(batch_preds)
+        batch_preds, loss = model(data["image"], data["seq"], data["seq_len"])
+        test_loss += loss.item()
+        test_preds.append(batch_preds)
 
     return test_preds, test_loss / len(data_loader)
 

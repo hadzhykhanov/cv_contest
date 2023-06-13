@@ -1,6 +1,6 @@
 import torch
 from torch.nn.functional import ctc_loss, log_softmax
-from torch.nn import Sequential, GRU, Module, AvgPool2d, Conv2d, Linear
+from torch.nn import Sequential, GRU, Module, AvgPool2d, Conv2d, Linear, LSTM
 from torchvision import models
 
 
