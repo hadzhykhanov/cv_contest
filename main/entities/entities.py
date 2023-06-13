@@ -23,8 +23,7 @@ class DataConfig:
 
 @dataclass()
 class ModelConfig:
-    cnn_input_height: int
-    cnn_input_width: int
+    resize: list
     cnn_output_len: int
     rnn_hidden_size: int
     rnn_num_layers: int

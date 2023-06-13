@@ -23,8 +23,9 @@ data_params:
   random_state: ${general.random_state}
 
 model_params:
-  cnn_input_height: 64
-  cnn_input_width: 320
+  resize:
+    - 10
+    - 20
   cnn_output_len: 100
   rnn_hidden_size: 512
   rnn_num_layers: 2

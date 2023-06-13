@@ -102,11 +102,12 @@ def make_loaders(
     test_files,
     test_encoded_targets,
     test_batch_size,
+    resize,
     num_workers,
 ):
     train_transform = albumentations.Compose(
         [
-            albumentations.Resize(64, 320),
+            albumentations.Resize(*resize),
         ]
     )
 
@@ -124,7 +125,7 @@ def make_loaders(
         num_workers=num_workers,
     )
 
-    test_transform = albumentations.Compose([albumentations.Resize(64, 320)])
+    test_transform = albumentations.Compose([albumentations.Resize(*resize)])
 
     test_dataset = OCRDataset(
         file_list=test_files,
