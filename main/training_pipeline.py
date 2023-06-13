@@ -74,14 +74,18 @@ def run_training(config: DictConfig):
         test_files=test_files,
         test_encoded_targets=test_encoded_targets,
         test_batch_size=config.training_params.test_batch_size,
+        num_workers=config.training_params.num_workers,
     )
 
-    # for data in train_loader:
-    #     print(**data)
-
-    model = CRNN(num_chars=len(label_encoder.classes_)).to(
-        config.training_params.device
-    )
+    model = CRNN(
+        num_chars=len(label_encoder.classes_),
+        cnn_input_size=config.model_params.cnn_input_size,
+        cnn_output_len=config.model_params.cnn_output_len,
+        rnn_hidden_size=config.model_params.rnn_hidden_size,
+        rnn_num_layers=config.model_params.rnn_num_layers,
+        rnn_dropout=config.model_params.rnn_dropout,
+        rnn_bidirectional=config.model_params.rnn_bidirectional,
+    ).to(config.training_params.device)
 
     optimizer = torch.optim.Adam(
         model.parameters(), lr=config.training_params.learning_rate

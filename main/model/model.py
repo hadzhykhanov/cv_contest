@@ -5,7 +5,7 @@ from torchvision import models
 
 
 class FeatureExtractor(Module):
-    def __init__(self, input_size=(64, 320), output_len=100):
+    def __init__(self, input_size, output_len):
         super(self.__class__, self).__init__()
 
         h, w = input_size
@@ -53,8 +53,8 @@ class SequencePredictor(Module):
         hidden_size,
         num_layers,
         num_classes,
-        dropout=0.3,
-        bidirectional=False,
+        dropout,
+        bidirectional,
     ):
         super(self.__class__, self).__init__()
 
@@ -87,7 +87,8 @@ class SequencePredictor(Module):
 
         return h
 
-    def _reshape_features(self, x):
+    @staticmethod
+    def _reshape_features(x):
         """Change dimensions of x to fit RNN expected input.
 
         Args:
@@ -118,12 +119,12 @@ class CRNN(Module):
     def __init__(
         self,
         num_chars,
-        cnn_input_size=(64, 320),
-        cnn_output_len=100,
-        rnn_hidden_size=512,
-        rnn_num_layers=2,
-        rnn_dropout=0.05,
-        rnn_bidirectional=True,
+        cnn_input_size,
+        cnn_output_len,
+        rnn_hidden_size,
+        rnn_num_layers,
+        rnn_dropout,
+        rnn_bidirectional,
     ):
         super(self.__class__, self).__init__()
 

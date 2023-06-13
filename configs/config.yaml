@@ -10,6 +10,7 @@ data_params:
 #  input_val_data_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/test/test"
   input_targets_path: "/kaggle/working/train_labels_no_nan.csv"
 #  input_targets_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/train_labels_no_nan.csv"
+
   id_column_name: "Id"
   target_column_name: "Expected"
 
@@ -20,6 +21,15 @@ data_params:
 
   test_size: 0.05
   random_state: ${general.random_state}
+
+model_params:
+  cnn_input_height: 64
+  cnn_input_width: 320
+  cnn_output_len: 100
+  rnn_hidden_size: 512
+  rnn_num_layers: 2
+  rnn_dropout: 0
+  rnn_bidirectional: true
 
 training_params:
   epochs_num: 8

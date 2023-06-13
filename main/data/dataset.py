@@ -33,25 +33,3 @@ class OCRDataset(Dataset):
 
     def __len__(self):
         return len(self.file_list)
-
-
-# class ValOCRDataset(Dataset):
-#     def __init__(self, file_list, transform):
-#         self.file_list = file_list
-#         self.transform = transform
-#
-#     def __getitem__(self, index):
-#         file = self.file_list[index]
-#         img = Image.open(file).convert("RGB")
-#         img = np.array(img)
-#
-#         if self.transform is not None:
-#             img = self.transform(image=img)["image"]
-#
-#         return {
-#             "image": img,
-#             "file": os.path.basename(file),
-#         }
-#
-#     def __len__(self):
-#         return len(self.file_list)

@@ -22,6 +22,17 @@ class DataConfig:
 
 
 @dataclass()
+class ModelConfig:
+    cnn_input_height: int
+    cnn_input_width: int
+    cnn_output_len: int
+    rnn_hidden_size: int
+    rnn_num_layers: int
+    rnn_dropout: float
+    rnn_bidirectional: bool
+
+
+@dataclass()
 class TrainingConfig:
     epochs_num: int
     train_batch_size: int
@@ -37,4 +48,5 @@ class TrainingConfig:
 class Config:
     general: GeneralConfig
     data_params: DataConfig
+    model_params: ModelConfig
     training_params: TrainingConfig
