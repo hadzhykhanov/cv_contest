@@ -114,7 +114,6 @@ def make_loaders(
         file_list=train_files,
         targets_encoded=train_encoded_targets,
         transform=train_transform,
-        num_workers=num_workers,
     )
 
     train_loader = DataLoader(
@@ -122,6 +121,7 @@ def make_loaders(
         batch_size=train_batch_size,
         shuffle=True,
         collate_fn=collate_fn,
+        num_workers=num_workers,
     )
 
     test_transform = albumentations.Compose([albumentations.Resize(64, 320)])
