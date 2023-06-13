@@ -74,13 +74,13 @@ def run_training(config: DictConfig):
         test_files=test_files,
         test_encoded_targets=test_encoded_targets,
         test_batch_size=config.training_params.test_batch_size,
-        resize=config.training_params.resize,
+        resize=config.model_params.resize,
         num_workers=config.training_params.num_workers,
     )
 
     model = CRNN(
         num_chars=len(label_encoder.classes_),
-        cnn_input_size=config.training_params.resize,
+        cnn_input_size=config.model_params.resize,
         cnn_output_len=config.model_params.cnn_output_len,
         rnn_hidden_size=config.model_params.rnn_hidden_size,
         rnn_num_layers=config.model_params.rnn_num_layers,
