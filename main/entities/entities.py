@@ -17,16 +17,8 @@ class DataConfig:
     output_metrics_path: str
     output_predictions_path: str
     output_encoder_path: str
-    train_rotation_scoring_path: str
-    val_rotation_scoring_path: str
     test_size: float
     random_state: int
-
-
-# @dataclass()
-# class SplittingConfig:
-#     test_size: float
-#     random_state: int
 
 
 @dataclass()
@@ -38,11 +30,11 @@ class TrainingConfig:
     factor: float
     patience: int
     device: str
+    num_workers: 2
 
 
 @dataclass()
 class Config:
     general: GeneralConfig
     data_params: DataConfig
-    # splitting_params: SplittingConfig
     training_params: TrainingConfig
