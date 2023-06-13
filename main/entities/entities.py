@@ -41,7 +41,7 @@ class TrainingConfig:
     factor: float
     patience: int
     device: str
-    num_workers: 2
+    num_workers: int
 
 
 @dataclass()
