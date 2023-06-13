@@ -59,7 +59,7 @@ class SequencePredictor(Module):
         super(self.__class__, self).__init__()
 
         self.num_classes = num_classes
-        self.rnn = GRU(
+        self.rnn = LSTM(
             input_size=input_size,
             hidden_size=hidden_size,
             num_layers=num_layers,
