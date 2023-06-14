@@ -50,7 +50,7 @@ def run_training(config: DictConfig):
         test_files=test_files,
         test_targets=test_targets,
         test_batch_size=config.training_params.test_batch_size,
-        resize=config.model_params.resize,
+        resize=config.aug_params.resize,
         num_workers=config.training_params.num_workers,
     )
 

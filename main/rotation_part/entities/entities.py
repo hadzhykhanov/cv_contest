@@ -23,6 +23,11 @@ class AugConfig:
 
 
 @dataclass()
+class ModelConfig:
+    resize: list
+
+
+@dataclass()
 class TrainingConfig:
     epochs_num: int
     train_batch_size: int
@@ -39,4 +44,5 @@ class Config:
     general: GeneralConfig
     data_params: DataConfig
     aug_params: AugConfig
+    model_params: ModelConfig
     training_params: TrainingConfig
