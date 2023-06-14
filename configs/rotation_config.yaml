@@ -29,7 +29,7 @@ training_params:
   learning_rate: 5e-4
   factor: 0.9
   patience: 2
-  device: "cuda"
+  device: "cpu"
   num_workers: 2
 
 hydra:
