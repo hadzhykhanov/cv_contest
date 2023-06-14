@@ -104,7 +104,7 @@ def run_training(config: DictConfig):
                     test_preds,
                     test_targets,
                 )
-            )[:100]
+            )[:5]
         )
         print(f"{epoch=}, {train_loss=}, {test_loss=}, {test_accuracy=}")
 
