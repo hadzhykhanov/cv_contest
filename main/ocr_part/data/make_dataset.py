@@ -3,7 +3,7 @@ import os
 import torch
 import pandas as pd
 import albumentations
-from data.dataset import OCRDataset
+from ocr_part.data.dataset import OCRDataset
 from torch.utils.data import DataLoader
 from sklearn.model_selection import train_test_split
 

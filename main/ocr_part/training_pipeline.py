@@ -3,15 +3,18 @@ import torch
 import hydra
 import torchmetrics
 from hydra.core.config_store import ConfigStore
-from data.make_dataset import read_data, split_train_test_data, make_loaders
+from ocr_part.data.make_dataset import read_data, split_train_test_data, make_loaders
 from omegaconf import DictConfig
 from sklearn.preprocessing import LabelEncoder
-from model.predictions_preprocessing import preprocess_prediction, decode_predictions
-from model.model import CRNN
+from ocr_part.model.predictions_preprocessing import (
+    preprocess_prediction,
+    decode_predictions,
+)
+from ocr_part.model.model import CRNN
 from joblib import dump
-from entities import entities
+from ocr_part.entities import entities
 from pprint import pprint
-from model.model_fit_predict import (
+from ocr_part.model.model_fit_predict import (
     train_model,
     evaluate_model,
     save_model,
@@ -28,7 +31,7 @@ config_store = ConfigStore.instance()
 config_store.store(name="config", node=entities.Config)
 
 
-@hydra.main(version_base=None, config_path="../configs", config_name="config")
+@hydra.main(version_base=None, config_path="../../configs", config_name="ocr_config")
 def run_training(config: DictConfig):
     (
         train_files,

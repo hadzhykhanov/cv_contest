@@ -35,4 +35,5 @@ def decode_predictions(preds, encoder):
                 temp.append(encoder.inverse_transform([k])[0])
         tp = "".join(temp)
         cap_preds.append(tp)
+
     return cap_preds
