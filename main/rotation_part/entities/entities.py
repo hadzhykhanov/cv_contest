@@ -24,7 +24,7 @@ class AugConfig:
 
 @dataclass()
 class ModelConfig:
-    resize: list
+    num_classes: int
 
 
 @dataclass()

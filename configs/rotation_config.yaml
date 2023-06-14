@@ -19,6 +19,9 @@ aug_params:
     - 144
     - 144
 
+model_params:
+  num_classes: 4
+
 training_params:
   epochs_num: 1
   train_batch_size: 256
