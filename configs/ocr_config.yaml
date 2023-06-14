@@ -14,7 +14,7 @@ data_params:
   id_column_name: "Id"
   target_column_name: "Expected"
 
-  output_model_path: "/kaggle/working/ocr_model.pth"
+  output_model_path: "/kaggle/working/ocr_model_crnn_resnet18_gru.pth"
   output_metrics_path: "/kaggle/working/metrics.json"
   output_predictions_path: "/kaggle/working/predictions.csv"
   output_encoder_path: "/kaggle/working/label_encoder.joblib"
