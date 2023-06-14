@@ -92,6 +92,12 @@ def run_training(config: DictConfig):
 
         test_accuracy = accuracy_score(test_targets, test_preds)
 
+        for value in angle_to_idx.values():
+            lst = list(filter(lambda x: x == value, test_targets))
+            true = list(filter(lambda x: x[0] == x[1], lst))
+
+            print(f"{value}, {len(true) / len(lst)}")
+
         pprint(
             list(
                 zip(
