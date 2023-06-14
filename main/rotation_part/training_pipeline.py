@@ -90,7 +90,7 @@ def run_training(config: DictConfig):
             model=model, data_loader=test_loader, device=config.training_params.device
         )
 
-        accuracy = accuracy_score(test_targets, test_preds)
+        test_accuracy = accuracy_score(test_targets, test_preds)
 
         pprint(
             list(
@@ -98,9 +98,9 @@ def run_training(config: DictConfig):
                     test_preds,
                     test_targets,
                 )
-            )[:6]
+            )[:100]
         )
-        print(f"{epoch=}, {train_loss=}, {test_loss=}, {accuracy=}")
+        print(f"{epoch=}, {train_loss=}, {test_loss=}, {test_accuracy=}")
 
         scheduler.step(test_loss)
 
