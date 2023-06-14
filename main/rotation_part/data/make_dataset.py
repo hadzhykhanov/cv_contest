@@ -14,7 +14,7 @@ def read_data(input_data_path):
 
     for path in iterator:
         files.append(path)
-        targets.append(int(path.split("_")[0]))
+        targets.append(int(path.split("_")[-1]))
 
     return files, targets
 

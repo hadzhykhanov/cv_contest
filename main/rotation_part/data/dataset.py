@@ -49,8 +49,8 @@ class RotationDataset(Dataset):
     def __getitem__(self, idx):
         file, target = self.file_list[idx], self.targets[idx]
         img = Image.open(file).convert("RGB")
-        img = self.rotate_image(image=img, angle=target)
         img = np.array(img)
+        img = self.rotate_image(image=img, angle=target)
 
         if self.transform is not None:
             img = self.transform(image=img)["image"]
