@@ -10,6 +10,12 @@ class RotationDataset(Dataset):
         self.file_list = file_list
         self.targets = targets
         self.transform = transform
+        self.idx_to_angle = {
+            0: 0,
+            1: 90,
+            2: 180,
+            3: 270,
+        }
 
     @staticmethod
     def rotate_image(image, angle):
@@ -58,7 +64,7 @@ class RotationDataset(Dataset):
         img = torch.tensor(img)
         img = img.permute(2, 0, 1).float()
 
-        return {"image": img, "target": target}
+        return {"image": img, "target": self.idx_to_angle[target]}
 
     def __len__(self):
         return len(self.file_list)

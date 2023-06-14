@@ -31,6 +31,15 @@ config_store.store(name="config", node=entities.Config)
 def run_training(config: DictConfig):
     files, targets = read_data(input_data_path=config.data_params.input_data_path)
 
+    angle_to_idx = {
+        0: 0,
+        90: 1,
+        180: 2,
+        270: 3,
+    }
+
+    targets = list(map(lambda x: angle_to_idx[x], targets))
+
     (
         train_files,
         test_files,
