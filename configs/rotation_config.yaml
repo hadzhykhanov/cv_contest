@@ -16,8 +16,8 @@ data_params:
 
 aug_params:
   resize:
-    - 144
-    - 144
+    - 256
+    - 256
 
 model_params:
   num_classes: 4
