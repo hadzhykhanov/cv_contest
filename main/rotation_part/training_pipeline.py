@@ -104,7 +104,7 @@ def run_training(config: DictConfig):
 
         scheduler.step(test_loss)
 
-    metrics = {"test_loss": test_loss, "accuracy": accuracy}
+    metrics = {"test_loss": test_loss, "accuracy": test_accuracy}
     save_model(model=model, output_model_path=config.data_params.output_model_path)
     save_metrics(
         metrics=metrics,
