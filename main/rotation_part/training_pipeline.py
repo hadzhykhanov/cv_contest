@@ -90,7 +90,7 @@ def run_training(config: DictConfig):
             model=model, data_loader=test_loader, device=config.training_params.device
         )
 
-        accuracy = accuracy_score(test_preds, test_preds)
+        accuracy = accuracy_score(test_targets, test_preds)
 
         pprint(
             list(
