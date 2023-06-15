@@ -24,7 +24,7 @@ def read_data(
         zip(targets_df.iloc[:, 0].values.ravel(), targets_df.iloc[:, 1].values.ravel())
     )
 
-    print(targets_dct.items()[:5])
+    print(targets_dct.items[:5])
 
     train_files = [str(path) for path in train_files_path.glob("*.jpg")]
     train_files = list(
@@ -63,8 +63,8 @@ def read_data(
         )
     )
 
-    print(rotations_train.items()[:5])
-    print(rotations_test.items()[:5])
+    print(rotations_train.items[:5])
+    print(rotations_test.items[:5])
 
     return (
         train_files,
