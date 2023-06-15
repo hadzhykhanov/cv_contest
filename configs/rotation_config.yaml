@@ -42,13 +42,16 @@ train:
     num_workers: 2
 
 inference:
+
+  input_data_path: "/kaggle/working/train/train"
+  input_model_path: "/kaggle/working/rotation_model_efficientnet_b4.pth"
+
   resize:
     - 256
     - 256
-
   inference_batch_size: 32
+  
   num_workers: 2
-  input_model_path: "/kaggle/working/rotation_model_efficientnet_b4.pth"
   device: "cuda"
 
 

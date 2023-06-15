@@ -50,10 +50,11 @@ class TrainConfig:
 
 @dataclass()
 class InferenceConfig:
+    input_data_path: str
+    input_model_path: str
     resize: list
     inference_batch_size: int
     num_workers: int
-    input_model_path: str
     device: str
 
 
