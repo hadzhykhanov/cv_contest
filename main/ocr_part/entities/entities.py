@@ -45,21 +45,10 @@ class TrainingConfig:
     device: str
     num_workers: int
 
+
 @dataclass()
-class TrainConfig:
+class Config:
     general: GeneralConfig
     data_params: DataConfig
     model_params: ModelConfig
     training_params: TrainingConfig
-
-@dataclass()
-class InferenceConfig:
-
-
-
-
-@dataclass()
-class Config:
-    train: TrainConfig
-    inference: InferenceConfig
-
