@@ -50,7 +50,7 @@ def inference(model, inference_loader, device):
         for key, value in data.items():
             data[key] = value.to(device)
 
-        batch_preds, _ = model(data["image"], data["target"])
+        batch_preds, _ = model(data["image"], None)
         inference_preds.extend(batch_preds.argmax(dim=1).cpu().numpy())
 
     return inference_preds

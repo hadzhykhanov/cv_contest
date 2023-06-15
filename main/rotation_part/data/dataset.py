@@ -54,7 +54,7 @@ class RotationDataset(Dataset):
         img = Image.open(file).convert("RGB")
         img = np.array(img)
 
-        if target:
+        if self.targets:
             img = self.rotate_image(image=img, angle=self.idx_to_angle[target])
 
         if self.transform is not None:
@@ -63,7 +63,11 @@ class RotationDataset(Dataset):
         img = torch.tensor(img)
         img = img.permute(2, 0, 1).float()
 
-        return {"image": img, "target": target}
+        out_dict = {"image": img}
+        if self.targets:
+            out_dict["target"] = target
+
+        return out_dict
 
     def __len__(self):
         return len(self.file_list)
