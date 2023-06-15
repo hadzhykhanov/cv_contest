@@ -68,6 +68,9 @@ class OCRDataset(Dataset):
         #     rotation_label,
         # )
 
+        for _ in range(15):
+            print("LOL")
+
         img = cv2.imread(file)
         img = self.rotate_image(image=img, angle=self.idx_to_angle[rotation_label])
 
@@ -83,9 +86,6 @@ class OCRDataset(Dataset):
 
         img = torch.tensor(img)
         img = img.permute(2, 0, 1).float()
-
-        # for _ in range(15):
-        # print("LOL")
 
         out_dict = {"image": img}
         if self.targets_encoded:
