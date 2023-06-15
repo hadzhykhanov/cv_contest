@@ -63,6 +63,10 @@ def read_data(
         )
     )
 
+    print(
+        f"{len(train_files)=}, {len(val_files)=}, {len(rotations_train)=}, {len(rotations_test)=}"
+    )
+
     # print(list(rotations_train.items())[:5])
     # print(list(rotations_test.items())[:5])
 
