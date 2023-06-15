@@ -47,6 +47,7 @@ inference:
   input_model_path: "/kaggle/working/rotation_model_efficientnet_b4.pth"
   output_predictions_path: "/kaggle/working/inference_predictions_train.csv"
 
+  num_classes: 4
   resize:
     - 256
     - 256

@@ -54,8 +54,10 @@ class InferenceConfig:
     input_model_path: str
     output_predictions_path: str
 
+    num_classes: int
     resize: list
     inference_batch_size: int
+
     num_workers: int
     device: str
 
