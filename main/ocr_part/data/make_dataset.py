@@ -49,6 +49,7 @@ def read_data(
     rotations_train = pd.read_csv(input_rotation_train_path)
     rotations_test = pd.read_csv(input_rotation_val_path)
 
+    rotations_train = rotations_train[rotations_train.iloc[:, 0].isin(train_files)]
     rotations_train = dict(
         zip(
             rotations_train.iloc[:, 0].values.ravel(),
