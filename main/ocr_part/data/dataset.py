@@ -62,11 +62,11 @@ class OCRDataset(Dataset):
         target = self.targets_encoded[idx] if self.targets_encoded else None
         rotation_label = self.rotation_labels[os.path.basename(file)]
 
-        print(
-            file,
-            target,
-            rotation_label,
-        )
+        # print(
+        #     file,
+        #     target,
+        #     rotation_label,
+        # )
 
         img = cv2.imread(file)
         img = self.rotate_image(image=img, angle=self.idx_to_angle[rotation_label])
@@ -88,6 +88,7 @@ class OCRDataset(Dataset):
         if self.targets_encoded:
             out_dict["target"] = target
 
+        print(out_dict)
         return out_dict
 
     def __len__(self):
