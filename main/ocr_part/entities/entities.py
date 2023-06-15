@@ -4,7 +4,6 @@ from dataclasses import dataclass
 @dataclass()
 class GeneralConfig:
     random_state: int
-    idx_to_angle: dict
 
 
 @dataclass()
