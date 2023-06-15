@@ -60,14 +60,14 @@ class OCRDataset(Dataset):
     def __getitem__(self, idx):
         file = self.file_list[idx]
         target = self.targets_encoded[idx] if self.targets_encoded else None
-        rotation_label = self.rotation_labels[os.path.basename(file)]
+        rotation_label = int(self.rotation_labels[os.path.basename(file)])
 
         img = cv2.imread(file)
-        print(rotation_label, self.idx_to_angle)
-        print(
-            type(rotation_label),
-            [(type(key), type(value)) for key, value in self.idx_to_angle.items()],
-        )
+        # print(rotation_label, self.idx_to_angle)
+        # print(
+        #     type(rotation_label),
+        #     [(type(key), type(value)) for key, value in self.idx_to_angle.items()],
+        # )
         ang = self.idx_to_angle[rotation_label]
 
         img = self.rotate_image(image=img, angle=ang)
