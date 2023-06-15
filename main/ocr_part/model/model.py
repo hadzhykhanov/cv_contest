@@ -15,7 +15,8 @@ class FeatureExtractor(Module):
         self.pool = AvgPool2d(kernel_size=(h // 32, 1))
         self.proj = Conv2d(w // 32, output_len, kernel_size=1)
 
-        self.num_output_features = self.cnn[-1][-1].bn2.num_features
+        # self.num_output_features = self.cnn[-1][-1].bn2.num_features
+        self.num_output_features = self.cnn[-1][-1][-2].num_features
 
     def apply_projection(self, x):
         """Use convolution to increase width of a features.
