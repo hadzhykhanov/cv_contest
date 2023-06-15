@@ -33,7 +33,7 @@ model_params:
   rnn_bidirectional: true
 
 training_params:
-  epochs_num: 8
+  epochs_num: 10
   train_batch_size: 512
   test_batch_size: 512
   learning_rate: 5e-4

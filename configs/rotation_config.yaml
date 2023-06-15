@@ -32,7 +32,7 @@ train:
     num_classes: 4
 
   training_params:
-    epochs_num: 10
+    epochs_num: 3
     train_batch_size: 32
     test_batch_size: 32
     learning_rate: 5e-4
@@ -50,7 +50,7 @@ inference:
     - 256
     - 256
   inference_batch_size: 32
-  
+
   num_workers: 2
   device: "cuda"
 
