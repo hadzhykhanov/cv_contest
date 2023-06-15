@@ -88,7 +88,8 @@ class OCRDataset(Dataset):
         if self.targets_encoded:
             out_dict["target"] = target
 
-        print(out_dict)
+        for _ in range(15):
+            print("LOL")
         return out_dict
 
     def __len__(self):
