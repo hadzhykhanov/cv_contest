@@ -111,9 +111,6 @@ def run_training(config: DictConfig):
         verbose=True,
     )
 
-    # for data in train_loader:
-    #     print(data)
-
     for epoch in range(1, config.training_params.epochs_num + 1):
         train_loss = train_model(
             model=model,
@@ -176,7 +173,7 @@ def run_training(config: DictConfig):
     save_model(model=model, output_model_path=config.data_params.output_model_path)
     save_metrics(
         metrics=metrics,
-        output_metrics_path=get_path(config.data_params.output_metrics_path),
+        output_metrics_path=get_path(config.data_params.output_test_metrics_path),
     )
     save_predictions(
         targets=test_orig_targets,
