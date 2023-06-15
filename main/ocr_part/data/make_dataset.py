@@ -20,7 +20,9 @@ def read_data(
     ), pathlib.Path(input_val_data_path)
 
     targets_df = pd.read_csv(input_targets_path)
-    targets_dct = dict(zip(targets_df.iloc[:, 0].values, targets_df.iloc[:, 1].values))
+    targets_dct = dict(
+        zip(targets_df.iloc[:, 0].values.ravel(), targets_df.iloc[:, 1].values.ravel())
+    )
 
     train_files = [str(path) for path in train_files_path.glob("*.jpg")]
     train_files = list(
@@ -46,11 +48,17 @@ def read_data(
     rotations_test = pd.read_csv(input_rotation_val_path)
 
     rotations_train = dict(
-        zip(rotations_train.iloc[:, 0].values, rotations_train.iloc[:, 1].values)
+        zip(
+            rotations_train.iloc[:, 0].values.ravel(),
+            rotations_train.iloc[:, 1].values.ravel(),
+        )
     )
 
     rotations_test = dict(
-        zip(rotations_test.iloc[:, 0].values, rotations_test.iloc[:, 1].values)
+        zip(
+            rotations_test.iloc[:, 0].values.ravel(),
+            rotations_test.iloc[:, 1].values.ravel(),
+        )
     )
 
     return (
@@ -178,11 +186,11 @@ def make_loaders(
         idx_to_angle=idx_to_angle,
     )
 
-    train_loader = DataLoader(
+    val_loader = DataLoader(
         dataset=val_dataset,
         batch_size=val_batch_size,
         shuffle=False,
         num_workers=num_workers,
     )
 
-    return train_loader, test_loader
+    return train_loader, test_loader, val_loader
