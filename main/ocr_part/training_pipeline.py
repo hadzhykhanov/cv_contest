@@ -12,7 +12,7 @@ from model.predictions_preprocessing import (
 )
 from model.model import CRNN
 from joblib import dump
-from ocr_part.entities import entities
+from entities import entities
 from pprint import pprint
 from model.model_fit_predict import (
     train_model,
