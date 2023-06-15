@@ -9,7 +9,7 @@ class FeatureExtractor(Module):
         super(self.__class__, self).__init__()
 
         h, w = input_size
-        resnet = getattr(models, "resnet18")(pretrained=True)
+        resnet = getattr(models, "resnet18")(weights=True)
         self.cnn = Sequential(*list(resnet.children())[:-2])
 
         self.pool = AvgPool2d(kernel_size=(h // 32, 1))

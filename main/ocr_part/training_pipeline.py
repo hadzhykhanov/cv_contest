@@ -111,6 +111,9 @@ def run_training(config: DictConfig):
         verbose=True,
     )
 
+    for data in train_loader:
+        print(data)
+
     for epoch in range(1, config.training_params.epochs_num + 1):
         train_loss = train_model(
             model=model,
