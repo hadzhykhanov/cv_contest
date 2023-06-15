@@ -67,8 +67,8 @@ def save_metrics(metrics, output_metrics_path):
 
 def save_predictions(paths, targets, preds, output_predictions_path):
     df_dict = {
-        "path": paths,
-        "pred": preds,
+        "Id": paths,
+        "Predicted": preds,
     }
 
     if targets:
