@@ -34,8 +34,8 @@ model_params:
 
 training_params:
   epochs_num: 8
-  train_batch_size: 32
-  test_batch_size: 32
+  train_batch_size: 512
+  test_batch_size: 512
   learning_rate: 5e-4
   factor: 0.9
   patience: 2
