@@ -26,7 +26,7 @@ data_params:
 model_params:
   resize:
     - 64
-    - 320
+    - 224
   cnn_output_len: 100
   rnn_hidden_size: 512
   rnn_num_layers: 2
