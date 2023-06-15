@@ -62,16 +62,10 @@ class OCRDataset(Dataset):
         target = self.targets_encoded[idx] if self.targets_encoded else None
         rotation_label = self.rotation_labels[os.path.basename(file)]
 
-        # print(
-        #     file,
-        #     target,
-        #     rotation_label,
-        # )
-
         img = cv2.imread(file)
+        print(rotation_label, self.idx_to_angle)
         ang = self.idx_to_angle[rotation_label]
-        for _ in range(15):
-            print("LOL")
+
         img = self.rotate_image(image=img, angle=ang)
 
         # img_height, img_width = img.shape[0], img.shape[1]
