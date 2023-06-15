@@ -93,7 +93,7 @@ def run_training(config: DictConfig):
         test_accuracy = accuracy_score(test_targets, test_preds)
 
         print(
-            list(filter(lambda x: x[0] != x[1], zip(files, test_targets, test_preds)))
+            list(filter(lambda x: x[1] != x[2], zip(files, test_targets, test_preds)))
         )
 
         for value in angle_to_idx.values():
