@@ -35,7 +35,7 @@ class ModelConfig:
 
 @dataclass()
 class TrainingConfig:
-    # epochs_num: int
+    epochs_num: int
     train_batch_size: int
     test_batch_size: int
     val_batch_size: int
