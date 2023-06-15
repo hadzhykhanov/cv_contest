@@ -62,6 +62,12 @@ class OCRDataset(Dataset):
         target = self.targets_encoded[idx] if self.targets_encoded else None
         rotation_label = self.rotation_labels[os.path.basename(file)]
 
+        print(
+            file,
+            target,
+            rotation_label,
+        )
+
         img = Image.open(file).convert("RGB")
         img = np.array(img)
 
