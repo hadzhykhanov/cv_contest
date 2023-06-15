@@ -40,10 +40,24 @@ def evaluate_model(model, data_loader, device):
     return test_preds, test_loss / len(data_loader)
 
 
+@torch.no_grad()
+def validate_model(model, inference_loader, device):
+    model.eval()
+    validation_preds = []
+
+    tk = tqdm(inference_loader, total=len(inference_loader))
+    for data in tk:
+        for key, value in data.items():
+            data[key] = value.to(device)
+
+        batch_preds, _ = model(data["image"], None)
+        validation_preds.append(batch_preds)
+
+    return validation_preds
+
+
 def save_model(model, output_model_path):
     torch.save(model.state_dict(), output_model_path)
-
-    # torch.save(model, output_model_path)
 
 
 def save_metrics(metrics, output_metrics_path):
@@ -51,12 +65,15 @@ def save_metrics(metrics, output_metrics_path):
         json.dump(metrics, metrics_file)
 
 
-def save_predictions(test_orig_targets, test_decoded_preds, output_predictions_path):
-    df = pd.DataFrame(
-        {
-            "test_orig_targets": test_orig_targets,
-            "test_decoded_preds": test_decoded_preds,
-        }
-    )
+def save_predictions(paths, targets, preds, output_predictions_path):
+    df_dict = {
+        "path": paths,
+        "pred": preds,
+    }
+
+    if targets:
+        df_dict["target"] = targets
+
+    df = pd.DataFrame(df_dict)
 
     df.to_csv(output_predictions_path, index=False)

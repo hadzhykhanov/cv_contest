@@ -17,6 +17,7 @@ from pprint import pprint
 from ocr_part.model.model_fit_predict import (
     train_model,
     evaluate_model,
+    validate_model,
     save_model,
     save_metrics,
     save_predictions,
@@ -39,12 +40,14 @@ def run_training(config: DictConfig):
         targets_orig,
         targets_splitted,
         targets_flattened,
+        rotations_train,
+        rotations_val,
     ) = read_data(
         input_train_data_path=config.data_params.input_train_data_path,
         input_val_data_path=config.data_params.input_val_data_path,
         input_targets_path=config.data_params.input_targets_path,
-        id_column_name=config.data_params.id_column_name,
-        target_column_name=config.data_params.target_column_name,
+        input_rotation_train_path=config.data_params.input_rotation_train_path,
+        input_rotation_val_path=config.data_params.input_rotation_val_path,
     )
 
     label_encoder = LabelEncoder()
@@ -70,15 +73,21 @@ def run_training(config: DictConfig):
         random_state=config.data_params.random_state,
     )
 
-    train_loader, test_loader = make_loaders(
+    train_loader, test_loader, val_loader = make_loaders(
         train_files=train_files,
         train_encoded_targets=train_encoded_targets,
         train_batch_size=config.training_params.train_batch_size,
+        rotations_train=rotations_train,
         test_files=test_files,
         test_encoded_targets=test_encoded_targets,
         test_batch_size=config.training_params.test_batch_size,
+        rotations_test=rotations_train,
+        val_files=val_files,
+        val_batch_size=config.training_params.val_batch_size,
+        rotations_val=rotations_val,
         resize=config.model_params.resize,
         num_workers=config.training_params.num_workers,
+        idx_to_angle=config.training_params.idx_to_angle,
     )
 
     model = CRNN(
@@ -111,7 +120,9 @@ def run_training(config: DictConfig):
         )
 
         test_preds, test_loss = evaluate_model(
-            model=model, data_loader=test_loader, device=config.training_params.device
+            model=model,
+            data_loader=test_loader,
+            device=config.training_params.device,
         )
 
         test_decoded_preds = [
@@ -141,16 +152,51 @@ def run_training(config: DictConfig):
 
         scheduler.step(test_loss)
 
-    metrics = {"test_loss": test_loss, "char_error_rate": char_error_rate}
+    val_preds = validate_model(
+        model=model,
+        inference_loader=val_loader,
+        device=config.training_params.device,
+    )
+
+    val_decoded_preds = [
+        decode_predictions(preds=prediction, encoder=label_encoder)
+        for prediction in val_preds
+    ]
+
+    val_decoded_preds = [
+        preprocess_prediction(prediction)
+        for lst in val_decoded_preds
+        for prediction in lst
+    ]
+
+    metrics = {"test_loss": test_loss, "test_char_error_rate": char_error_rate}
     save_model(model=model, output_model_path=config.data_params.output_model_path)
     save_metrics(
         metrics=metrics,
         output_metrics_path=get_path(config.data_params.output_metrics_path),
     )
     save_predictions(
-        test_orig_targets=test_orig_targets,
-        test_decoded_preds=test_decoded_preds,
-        output_predictions_path=config.data_params.output_predictions_path,
+        targets=test_orig_targets,
+        preds=test_decoded_preds,
+        paths=list(
+            map(
+                lambda x: os.path.basename(x),
+                test_files,
+            )
+        ),
+        output_predictions_path=config.data_params.output_test_predictions_path,
+    )
+
+    save_predictions(
+        targets=None,
+        preds=val_decoded_preds,
+        paths=list(
+            map(
+                lambda x: os.path.basename(x),
+                val_files,
+            )
+        ),
+        output_predictions_path=config.data_params.output_val_predictions_path,
     )
 
 

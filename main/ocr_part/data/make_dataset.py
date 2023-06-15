@@ -12,15 +12,15 @@ def read_data(
     input_train_data_path,
     input_val_data_path,
     input_targets_path,
-    id_column_name,
-    target_column_name,
+    input_rotation_train_path,
+    input_rotation_val_path,
 ):
     train_files_path, val_files_path = pathlib.Path(
         input_train_data_path
     ), pathlib.Path(input_val_data_path)
 
     targets_df = pd.read_csv(input_targets_path)
-    targets_dct = dict(zip(targets_df[id_column_name], targets_df[target_column_name]))
+    targets_dct = dict(zip(targets_df.iloc[:, 0], targets_df.iloc[:, 1]))
 
     train_files = [str(path) for path in train_files_path.glob("*.jpg")]
     train_files = list(
@@ -42,12 +42,25 @@ def read_data(
             targets_splitted.append(list(target))
             targets_flattened.update(target)
 
+    rotations_train = pd.read_csv(input_rotation_train_path)
+    rotations_test = pd.read_csv(input_rotation_val_path)
+
+    rotations_train = dict(
+        zip(rotations_train.iloc[:, 0].values(), rotations_train.iloc[:, 1].values())
+    )
+
+    rotations_test = dict(
+        zip(rotations_test.iloc[:, 0].values(), rotations_test.iloc[:, 1].values())
+    )
+
     return (
         train_files,
         val_files,
         targets_orig,
         targets_splitted,
         list(targets_flattened),
+        rotations_train,
+        rotations_test,
     )
 
 
@@ -99,11 +112,17 @@ def make_loaders(
     train_files,
     train_encoded_targets,
     train_batch_size,
+    rotations_train,
     test_files,
     test_encoded_targets,
     test_batch_size,
+    rotations_test,
+    val_files,
+    val_batch_size,
+    rotations_val,
     resize,
     num_workers,
+    idx_to_angle,
 ):
     train_transform = albumentations.Compose(
         [
@@ -115,6 +134,8 @@ def make_loaders(
         file_list=train_files,
         targets_encoded=train_encoded_targets,
         transform=train_transform,
+        rotation_labels=rotations_train,
+        idx_to_angle=idx_to_angle,
     )
 
     train_loader = DataLoader(
@@ -131,6 +152,8 @@ def make_loaders(
         file_list=test_files,
         targets_encoded=test_encoded_targets,
         transform=test_transform,
+        rotation_labels=rotations_test,
+        idx_to_angle=idx_to_angle,
     )
 
     test_loader = DataLoader(
@@ -138,6 +161,27 @@ def make_loaders(
         batch_size=test_batch_size,
         shuffle=False,
         collate_fn=collate_fn,
+        num_workers=num_workers,
+    )
+
+    val_transform = albumentations.Compose(
+        [
+            albumentations.Resize(*resize),
+        ]
+    )
+
+    val_dataset = OCRDataset(
+        file_list=val_files,
+        targets_encoded=None,
+        transform=val_transform,
+        rotation_labels=rotations_val,
+        idx_to_angle=idx_to_angle,
+    )
+
+    train_loader = DataLoader(
+        dataset=val_dataset,
+        batch_size=val_batch_size,
+        shuffle=False,
         num_workers=num_workers,
     )
 
