@@ -69,9 +69,10 @@ class OCRDataset(Dataset):
         # )
 
         img = cv2.imread(file)
-        img = self.rotate_image(image=img, angle=self.idx_to_angle[rotation_label])
+        ang = self.idx_to_angle[rotation_label]
         for _ in range(15):
             print("LOL")
+        img = self.rotate_image(image=img, angle=ang)
 
         # img_height, img_width = img.shape[0], img.shape[1]
         # if img_height > img_width:
