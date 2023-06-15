@@ -64,6 +64,10 @@ class OCRDataset(Dataset):
 
         img = cv2.imread(file)
         print(rotation_label, self.idx_to_angle)
+        print(
+            type(rotation_label),
+            [(type(key), type(value)) for key, value in self.idx_to_angle.items()],
+        )
         ang = self.idx_to_angle[rotation_label]
 
         img = self.rotate_image(image=img, angle=ang)
