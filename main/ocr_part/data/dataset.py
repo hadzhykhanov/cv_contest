@@ -84,12 +84,13 @@ class OCRDataset(Dataset):
         img = torch.tensor(img)
         img = img.permute(2, 0, 1).float()
 
+        for _ in range(15):
+            print("LOL")
+
         out_dict = {"image": img}
         if self.targets_encoded:
             out_dict["target"] = target
 
-        for _ in range(15):
-            print("LOL")
         return out_dict
 
     def __len__(self):
