@@ -71,8 +71,8 @@ class OCRDataset(Dataset):
         img = Image.open(file).convert("RGB")
         img = np.array(img)
 
-        if self.targets_encoded:
-            img = self.rotate_image(image=img, angle=self.idx_to_angle[rotation_label])
+        img = self.rotate_image(image=img, angle=self.idx_to_angle[rotation_label])
+        print(type(img))
 
         # img_height, img_width = img.shape[0], img.shape[1]
         # if img_height > img_width:
