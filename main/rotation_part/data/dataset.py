@@ -6,16 +6,11 @@ from torch.utils.data.dataset import Dataset
 
 
 class RotationDataset(Dataset):
-    def __init__(self, file_list, targets, transform):
+    def __init__(self, file_list, transform, targets, idx_to_angle):
         self.file_list = file_list
         self.targets = targets
         self.transform = transform
-        self.idx_to_angle = {
-            0: 0,
-            1: 90,
-            2: 180,
-            3: 270,
-        }
+        self.idx_to_angle = idx_to_angle
 
     @staticmethod
     def rotate_image(image, angle):
@@ -53,10 +48,14 @@ class RotationDataset(Dataset):
         return rotated
 
     def __getitem__(self, idx):
-        file, target = self.file_list[idx], self.targets[idx]
+        file = self.file_list[idx]
+        target = self.targets[idx] if self.targets else None
+
         img = Image.open(file).convert("RGB")
         img = np.array(img)
-        img = self.rotate_image(image=img, angle=self.idx_to_angle[target])
+
+        if target:
+            img = self.rotate_image(image=img, angle=self.idx_to_angle[target])
 
         if self.transform is not None:
             img = self.transform(image=img)["image"]

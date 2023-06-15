@@ -8,15 +8,9 @@ from sklearn.model_selection import train_test_split
 def read_data(input_data_path):
     files_path = pathlib.Path(input_data_path)
 
-    files = []
-    targets = []
-    iterator = map(lambda x: str(x), files_path.glob("*"))
+    files = [str(path) for path in files_path.glob("*")]
 
-    for path in iterator:
-        files.append(path)
-        targets.append(int(path.split("_")[-1].split(".")[0]))
-
-    return files, targets
+    return files
 
 
 def split_train_test_data(file_list, targets, test_size, random_state):
@@ -65,6 +59,7 @@ def make_loaders(
     test_batch_size,
     resize,
     num_workers,
+    idx_to_angle,
 ):
     train_transform = albumentations.Compose(
         [
@@ -76,6 +71,7 @@ def make_loaders(
         file_list=train_files,
         targets=train_targets,
         transform=train_transform,
+        idx_to_angle=idx_to_angle,
     )
 
     train_loader = DataLoader(
@@ -95,6 +91,7 @@ def make_loaders(
         file_list=test_files,
         targets=test_targets,
         transform=test_transform,
+        idx_to_angle=idx_to_angle,
     )
 
     test_loader = DataLoader(

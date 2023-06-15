@@ -3,34 +3,54 @@ defaults:
 #  - override hydra/hydra_logging: colorlog
 #  - override hydra/job_logging: colorlog
 
-data_params:
-  input_data_path: "/kaggle/working/all_ocr_dataset"
-#  input_train_data_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/train/train"
 
-  output_model_path: "/kaggle/working/rotation_model_resnet18.pth"
-  output_metrics_path: "/kaggle/working/metrics.json"
-  output_predictions_path: "/kaggle/working/predictions.csv"
+train:
+  data_params:
+    input_data_path: "/kaggle/working/all_ocr_dataset"
+  #  input_data_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/train/train"
 
-  test_size: 0.05
-  random_state: ${general.random_state}
+    output_model_path: "/kaggle/working/rotation_model_efficientnet_b4.pth"
+    output_metrics_path: "/kaggle/working/metrics.json"
+    output_predictions_path: "/kaggle/working/predictions.csv"
 
-aug_params:
+    angle_to_idx:
+      0: 0
+      90: 1
+      180: 2
+      270: 3
+
+
+    test_size: 0.05
+    random_state: ${general.random_state}
+
+  aug_params:
+    resize:
+      - 256
+      - 256
+
+  model_params:
+    num_classes: 4
+
+  training_params:
+    epochs_num: 10
+    train_batch_size: 32
+    test_batch_size: 32
+    learning_rate: 5e-4
+    factor: 0.9
+    patience: 2
+    device: "cuda"
+    num_workers: 2
+
+inference:
   resize:
     - 256
     - 256
 
-model_params:
-  num_classes: 4
-
-training_params:
-  epochs_num: 10
-  train_batch_size: 32
-  test_batch_size: 32
-  learning_rate: 5e-4
-  factor: 0.9
-  patience: 2
-  device: "cuda"
+  inference_batch_size: 32
   num_workers: 2
+  input_model_path: "/kaggle/working/rotation_model_efficientnet_b4.pth"
+  device: "cuda"
+
 
 hydra:
   run:
