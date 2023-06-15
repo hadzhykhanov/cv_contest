@@ -1,4 +1,3 @@
-import torch
 from torch.nn import CrossEntropyLoss, Linear
 from torch.nn import Module
 from torchvision import models
