@@ -11,8 +11,8 @@ data_params:
 #  input_val_data_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/test/test"
   input_targets_path: "/kaggle/working/cv_contest/data/vk_made_ocr/train_labels_no_nan.csv"
 #  input_targets_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/train_labels_no_nan.csv"
-  input_rotation_train_path: "/kaggle/working/cv_contest/inference_predictions_train.csv"
-  input_rotation_val_path: "/kaggle/working/cv_contest/inference_predictions_test.csv"
+  input_rotation_train_path: "/kaggle/working/cv_contest/data/inference_predictions_train.csv"
+  input_rotation_val_path: "/kaggle/working/cv_contest/data/inference_predictions_test.csv"
 
   output_model_path: "/kaggle/working/ocr_crnn_resnet18_gru.pth"
   output_test_metrics_path: "/kaggle/working/test_metrics.json"
