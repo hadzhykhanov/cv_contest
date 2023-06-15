@@ -50,7 +50,7 @@ def run_training(config: DictConfig):
     )
 
     model = ResNet18(num_classes=config.inference.num_classes).to(
-        config.training_params.device
+        config.inference.device
     )
 
     model = load_model(
