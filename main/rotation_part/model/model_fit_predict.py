@@ -79,4 +79,5 @@ def save_predictions(paths, targets, preds, output_predictions_path):
     if targets is not None:
         df_dict["target"] = targets
 
+    df_dict = pd.DataFrame(df_dict)
     df_dict.to_csv(output_predictions_path, index=False)

@@ -27,7 +27,7 @@ config_store.store(name="config", node=entities.Config)
     version_base=None, config_path="../../configs", config_name="rotation_config"
 )
 def run_training(config: DictConfig):
-    inference_files = read_data(input_data_path=config.data_params.input_data_path)
+    inference_files = read_data(input_data_path=config.inference.input_data_path)
 
     train_transform = albumentations.Compose(
         [
@@ -49,7 +49,7 @@ def run_training(config: DictConfig):
         num_workers=config.inference.num_workers,
     )
 
-    model = ResNet18(num_classes=config.model_params.num_classes).to(
+    model = ResNet18(num_classes=config.inference.num_classes).to(
         config.training_params.device
     )
 
@@ -68,7 +68,7 @@ def run_training(config: DictConfig):
         paths=list(map(lambda x: os.path.basename(x), inference_files)),
         preds=inference_preds,
         targets=None,
-        output_predictions_path=config.data_params.output_predictions_path,
+        output_predictions_path=config.inference.output_predictions_path,
     )
 
 
