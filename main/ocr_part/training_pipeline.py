@@ -3,18 +3,18 @@ import torch
 import hydra
 import torchmetrics
 from hydra.core.config_store import ConfigStore
-from ocr_part.data.make_dataset import read_data, split_train_test_data, make_loaders
+from data.make_dataset import read_data, split_train_test_data, make_loaders
 from omegaconf import DictConfig
 from sklearn.preprocessing import LabelEncoder
-from ocr_part.model.predictions_preprocessing import (
+from model.predictions_preprocessing import (
     preprocess_prediction,
     decode_predictions,
 )
-from ocr_part.model.model import CRNN
+from model.model import CRNN
 from joblib import dump
 from ocr_part.entities import entities
 from pprint import pprint
-from ocr_part.model.model_fit_predict import (
+from model.model_fit_predict import (
     train_model,
     evaluate_model,
     validate_model,
