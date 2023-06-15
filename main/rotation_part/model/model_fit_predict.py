@@ -41,11 +41,11 @@ def evaluate_model(model, data_loader, device):
 
 
 @torch.no_grad()
-def inference(model, data_loader, device):
+def inference(model, inference_loader, device):
     model.eval()
     inference_preds = []
 
-    tk = tqdm(data_loader, total=len(data_loader))
+    tk = tqdm(inference_loader, total=len(inference_loader))
     for data in tk:
         for key, value in data.items():
             data[key] = value.to(device)
