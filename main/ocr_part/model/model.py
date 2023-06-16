@@ -162,7 +162,7 @@ class SequencePredictor(Module):
         """
 
         x = x.squeeze(1)
-        x = x.permute(0, 2, 1)
+        x = x.permute(2, 0, 1)
 
         return x
 
@@ -206,7 +206,7 @@ class CRNN(Module):
         x = self.features_extractor(images)
         print(x.size())
         x = self.sequence_predictor(x)
-        x = x.permute(1, 0, 2)
+        # x = x.permute(1, 0, 2)
         # print(x)
         print(x.size())
 
