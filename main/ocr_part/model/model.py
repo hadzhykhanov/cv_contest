@@ -1,6 +1,7 @@
 import torch
 from torch.nn.functional import ctc_loss, log_softmax
-from torch.nn import Sequential, GRU, Module, AvgPool2d, Conv2d, Linear, LSTM
+from torch.nn import Sequential, GRU, Module, AvgPool2d, Conv2d, Linear
+import torch.nn as nn
 from torchvision import models
 
 
@@ -61,6 +62,76 @@ class FeatureExtractor(Module):
         return features
 
 
+# class SequencePredictor(Module):
+#     def __init__(
+#         self,
+#         input_size,
+#         hidden_size,
+#         num_layers,
+#         num_classes,
+#         dropout,
+#         bidirectional,
+#     ):
+#         super(self.__class__, self).__init__()
+#
+#         self.num_classes = num_classes
+#
+#         self.rnn = GRU(
+#             input_size=input_size,
+#             hidden_size=hidden_size,
+#             num_layers=num_layers,
+#             dropout=dropout,
+#             bidirectional=bidirectional,
+#         )
+#
+#         fc_in = hidden_size if not bidirectional else 2 * hidden_size
+#         self.fc = Linear(in_features=fc_in, out_features=num_classes)
+#
+#     def _init_hidden(self, batch_size):
+#         """Initialize new tensor of zeroes for RNN hidden state.
+#
+#         Args:
+#             - batch_size: Int size of batch
+#
+#         Returns:
+#             Tensor of zeros shaped (num_layers * num_directions, batch, hidden_size).
+#         """
+#         num_directions = 2 if self.rnn.bidirectional else 1
+#
+#         h = torch.zeros(
+#             self.rnn.num_layers * num_directions, batch_size, self.rnn.hidden_size
+#         )
+#
+#         return h
+#
+#     @staticmethod
+#     def _reshape_features(x):
+#         """Change dimensions of x to fit RNN expected input.
+#
+#         Args:
+#             - x: Tensor x shaped (B x (C=1) x H x W).
+#
+#         Returns:
+#             New tensor shaped (W x B x H).
+#         """
+#
+#         x = x.squeeze(1)
+#         x = x.permute(2, 0, 1)
+#
+#         return x
+#
+#     def forward(self, x):
+#         x = self._reshape_features(x)
+#
+#         batch_size = x.size(1)
+#         h_0 = self._init_hidden(batch_size)
+#         h_0 = h_0.to(x.device)
+#         x, h = self.rnn(x, h_0)
+#
+#         x = self.fc(x)
+#         return x
+
+
 class SequencePredictor(Module):
     def __init__(
         self,
@@ -74,33 +145,20 @@ class SequencePredictor(Module):
         super(self.__class__, self).__init__()
 
         self.num_classes = num_classes
-        self.rnn = GRU(
-            input_size=input_size,
-            hidden_size=hidden_size,
-            num_layers=num_layers,
-            dropout=dropout,
-            bidirectional=bidirectional,
-        )
 
-        fc_in = hidden_size if not bidirectional else 2 * hidden_size
-        self.fc = Linear(in_features=fc_in, out_features=num_classes)
+        encoder_layer = nn.TransformerEncoderLayer(d_model=hidden_size, nhead=4)
+        self.transformer_encoder = nn.TransformerEncoder(encoder_layer, num_layers=6)
 
-    def _init_hidden(self, batch_size):
-        """Initialize new tensor of zeroes for RNN hidden state.
+        # self.rnn = GRU(
+        #     input_size=input_size,
+        #     hidden_size=hidden_size,
+        #     num_layers=num_layers,
+        #     dropout=dropout,
+        #     bidirectional=bidirectional,
+        # )
 
-        Args:
-            - batch_size: Int size of batch
-
-        Returns:
-            Tensor of zeros shaped (num_layers * num_directions, batch, hidden_size).
-        """
-        num_directions = 2 if self.rnn.bidirectional else 1
-
-        h = torch.zeros(
-            self.rnn.num_layers * num_directions, batch_size, self.rnn.hidden_size
-        )
-
-        return h
+        # fc_in = hidden_size if not bidirectional else 2 * hidden_size
+        self.fc = Linear(in_features=hidden_size, out_features=num_classes)
 
     @staticmethod
     def _reshape_features(x):
@@ -120,13 +178,9 @@ class SequencePredictor(Module):
 
     def forward(self, x):
         x = self._reshape_features(x)
-
-        batch_size = x.size(1)
-        h_0 = self._init_hidden(batch_size)
-        h_0 = h_0.to(x.device)
-        x, h = self.rnn(x, h_0)
-
+        x = self.transformer_encoder(x)
         x = self.fc(x)
+
         return x
 
 
