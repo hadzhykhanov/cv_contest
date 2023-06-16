@@ -3,7 +3,6 @@ import torch
 
 def preprocess_prediction(prediction, special_symbol="-"):
     current = ""
-    print(prediction)
     for char in prediction:
         if current == "":
             current = char
@@ -24,6 +23,8 @@ def decode_predictions(preds, encoder):
     preds = torch.softmax(preds, dim=2)
     preds = torch.argmax(preds, dim=2)
     preds = preds.detach().cpu().numpy()
+
+    # print(preds.shape)
 
     cap_preds = []
     for counter in range(preds.shape[0]):

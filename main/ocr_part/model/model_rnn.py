@@ -64,17 +64,44 @@ class FeatureExtractor(Module):
 class SequencePredictor(Module):
     def __init__(
         self,
+        input_size,
         hidden_size,
+        num_layers,
         num_classes,
+        dropout,
+        bidirectional,
     ):
         super(self.__class__, self).__init__()
 
         self.num_classes = num_classes
 
-        encoder_layer = nn.TransformerEncoderLayer(d_model=hidden_size, nhead=4)
-        self.transformer_encoder = nn.TransformerEncoder(encoder_layer, num_layers=6)
+        self.rnn = GRU(
+            input_size=input_size,
+            hidden_size=hidden_size,
+            num_layers=num_layers,
+            dropout=dropout,
+            bidirectional=bidirectional,
+        )
 
-        self.fc = Linear(in_features=hidden_size, out_features=num_classes)
+        fc_in = hidden_size if not bidirectional else 2 * hidden_size
+        self.fc = Linear(in_features=fc_in, out_features=num_classes)
+
+    def _init_hidden(self, batch_size):
+        """Initialize new tensor of zeroes for RNN hidden state.
+
+        Args:
+            - batch_size: Int size of batch
+
+        Returns:
+            Tensor of zeros shaped (num_layers * num_directions, batch, hidden_size).
+        """
+        num_directions = 2 if self.rnn.bidirectional else 1
+
+        h = torch.zeros(
+            self.rnn.num_layers * num_directions, batch_size, self.rnn.hidden_size
+        )
+
+        return h
 
     @staticmethod
     def _reshape_features(x):
@@ -94,9 +121,13 @@ class SequencePredictor(Module):
 
     def forward(self, x):
         x = self._reshape_features(x)
-        x = self.transformer_encoder(x)
-        x = self.fc(x)
 
+        batch_size = x.size(1)
+        h_0 = self._init_hidden(batch_size)
+        h_0 = h_0.to(x.device)
+        x, h = self.rnn(x, h_0)
+
+        x = self.fc(x)
         return x
 
 
@@ -107,6 +138,9 @@ class CRNN(Module):
         cnn_input_size,
         cnn_output_len,
         rnn_hidden_size,
+        rnn_num_layers,
+        rnn_dropout,
+        rnn_bidirectional,
     ):
         super(self.__class__, self).__init__()
 
@@ -115,8 +149,12 @@ class CRNN(Module):
             input_size=cnn_input_size, output_len=cnn_output_len
         )
         self.sequence_predictor = SequencePredictor(
+            input_size=self.features_extractor.num_output_features,
             hidden_size=rnn_hidden_size,
+            num_layers=rnn_num_layers,
             num_classes=self.num_chars,
+            dropout=rnn_dropout,
+            bidirectional=rnn_bidirectional,
         )
 
     def forward(self, images, targets=None, seq_len=None):
