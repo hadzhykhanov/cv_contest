@@ -50,13 +50,6 @@ def run_training(config: DictConfig):
         input_rotation_val_path=config.data_params.input_rotation_val_path,
     )
 
-    train_files, targets_orig, targets_flattened, rotations_train = (
-        train_files[:10000],
-        targets_orig[:10000],
-        targets_flattened[:10000],
-        rotations_train[:10000],
-    )
-
     label_encoder = LabelEncoder()
     label_encoder.fit(targets_flattened)
     dump(label_encoder, config.data_params.output_encoder_path)
