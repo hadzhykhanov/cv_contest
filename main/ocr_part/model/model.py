@@ -29,7 +29,7 @@ class FeatureExtractor(Module):
     #         self.pool = AvgPool2d(kernel_size=(h // 32, 1))
     #         self.proj = Conv2d(w // 32, output_len, kernel_size=1)
     #
-    #         # self.num_output_features = self.cnn[-1][-1].bn2.num_features
+    #
     #         self.num_output_features = self.cnn[-1][-1][-2].num_features
 
     def apply_projection(self, x):
@@ -71,7 +71,7 @@ class SequencePredictor(Module):
 
         self.num_classes = num_classes
 
-        encoder_layer = nn.TransformerEncoderLayer(d_model=hidden_size, nhead=4)
+        encoder_layer = nn.TransformerEncoderLayer(d_model=hidden_size, nhead=8)
         self.transformer_encoder = nn.TransformerEncoder(encoder_layer, num_layers=6)
 
         self.fc = Linear(in_features=hidden_size, out_features=num_classes)
