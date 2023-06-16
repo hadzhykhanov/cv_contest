@@ -134,7 +134,7 @@ def run_training(config: DictConfig):
             for prediction in lst
         ]
 
-        char_error_rate = torchmetrics.functional.char_error_rate(
+        test_char_error_rate = torchmetrics.functional.char_error_rate(
             preds=test_decoded_preds, target=test_orig_targets
         ).item()
 
@@ -146,7 +146,7 @@ def run_training(config: DictConfig):
                 )
             )[:6]
         )
-        print(f"{epoch=}, {train_loss=}, {test_loss=}, {char_error_rate=}")
+        print(f"{epoch=}, {train_loss=}, {test_loss=}, {test_char_error_rate=}")
 
         scheduler.step(test_loss)
     # except:
@@ -169,7 +169,7 @@ def run_training(config: DictConfig):
         for prediction in lst
     ]
 
-    metrics = {"test_loss": test_loss, "test_char_error_rate": char_error_rate}
+    metrics = {"test_loss": test_loss, "test_char_error_rate": test_char_error_rate}
     save_model(model=model, output_model_path=config.data_params.output_model_path)
     save_metrics(
         metrics=metrics,
