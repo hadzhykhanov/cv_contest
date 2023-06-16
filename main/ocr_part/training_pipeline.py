@@ -111,49 +111,49 @@ def run_training(config: DictConfig):
         verbose=True,
     )
 
-    try:
-        for epoch in range(1, config.training_params.epochs_num + 1):
-            train_loss = train_model(
-                model=model,
-                data_loader=train_loader,
-                optimizer=optimizer,
-                device=config.training_params.device,
-            )
+    # try:
+    for epoch in range(1, config.training_params.epochs_num + 1):
+        train_loss = train_model(
+            model=model,
+            data_loader=train_loader,
+            optimizer=optimizer,
+            device=config.training_params.device,
+        )
 
-            test_preds, test_loss = evaluate_model(
-                model=model,
-                data_loader=test_loader,
-                device=config.training_params.device,
-            )
+        test_preds, test_loss = evaluate_model(
+            model=model,
+            data_loader=test_loader,
+            device=config.training_params.device,
+        )
 
-            test_decoded_preds = [
-                decode_predictions(preds=prediction, encoder=label_encoder)
-                for prediction in test_preds
-            ]
+        test_decoded_preds = [
+            decode_predictions(preds=prediction, encoder=label_encoder)
+            for prediction in test_preds
+        ]
 
-            test_decoded_preds = [
-                preprocess_prediction(prediction)
-                for lst in test_decoded_preds
-                for prediction in lst
-            ]
+        test_decoded_preds = [
+            preprocess_prediction(prediction)
+            for lst in test_decoded_preds
+            for prediction in lst
+        ]
 
-            char_error_rate = torchmetrics.functional.char_error_rate(
-                preds=test_decoded_preds, target=test_orig_targets
-            ).item()
+        char_error_rate = torchmetrics.functional.char_error_rate(
+            preds=test_decoded_preds, target=test_orig_targets
+        ).item()
 
-            pprint(
-                list(
-                    zip(
-                        test_orig_targets,
-                        test_decoded_preds,
-                    )
-                )[:6]
-            )
-            print(f"{epoch=}, {train_loss=}, {test_loss=}, {char_error_rate=}")
+        pprint(
+            list(
+                zip(
+                    test_orig_targets,
+                    test_decoded_preds,
+                )
+            )[:6]
+        )
+        print(f"{epoch=}, {train_loss=}, {test_loss=}, {char_error_rate=}")
 
-            scheduler.step(test_loss)
-    except:
-        pass
+        scheduler.step(test_loss)
+    # except:
+    #     pass
 
     val_preds = validate_model(
         model=model,
