@@ -162,7 +162,7 @@ class SequencePredictor(Module):
         """
 
         x = x.squeeze(1)
-        x = x.permute(2, 0, 1)
+        x = x.permute(0, 2, 1)
 
         return x
 
@@ -204,7 +204,7 @@ class CRNN(Module):
         batch_size, _, _, _ = images.size()
 
         x = self.features_extractor(images)
-        print(x.size())
+        # print(x.size())
         x = self.sequence_predictor(x)
 
         if targets is not None:
