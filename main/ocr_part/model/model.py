@@ -4,32 +4,32 @@ from torch.nn import Sequential, GRU, Module, AvgPool2d, Conv2d, Linear, LSTM
 from torchvision import models
 
 
-class FeatureExtractor(Module):
-    def __init__(self, input_size, output_len):
-        super(self.__class__, self).__init__()
+# class FeatureExtractor(Module):
+#     def __init__(self, input_size, output_len):
+#         super(self.__class__, self).__init__()
+#
+#         h, w = input_size
+#         resnet = getattr(models, "resnet18")(weights=True)
+#         self.cnn = Sequential(*list(resnet.children())[:-2])
+#
+#         self.pool = AvgPool2d(kernel_size=(h // 32, 1))
+#         self.proj = Conv2d(w // 32, output_len, kernel_size=1)
+#
+#         self.num_output_features = self.cnn[-1][-1].bn2.num_features
 
-        h, w = input_size
-        resnet = getattr(models, "resnet18")(weights=True)
-        self.cnn = Sequential(*list(resnet.children())[:-2])
+    class FeatureExtractor(Module):
+        def __init__(self, input_size, output_len):
+            super(self.__class__, self).__init__()
 
-        self.pool = AvgPool2d(kernel_size=(h // 32, 1))
-        self.proj = Conv2d(w // 32, output_len, kernel_size=1)
+            h, w = input_size
+            resnet = getattr(models, "efficientnet_b4")(weights=True)
+            self.cnn = Sequential(*list(resnet.children())[:-2])
 
-        self.num_output_features = self.cnn[-1][-1].bn2.num_features
+            self.pool = AvgPool2d(kernel_size=(h // 32, 1))
+            self.proj = Conv2d(w // 32, output_len, kernel_size=1)
 
-    # class FeatureExtractor(Module):
-    #     def __init__(self, input_size, output_len):
-    #         super(self.__class__, self).__init__()
-    #
-    #         h, w = input_size
-    #         resnet = getattr(models, "efficientnet_b4")(weights=True)
-    #         self.cnn = Sequential(*list(resnet.children())[:-2])
-    #
-    #         self.pool = AvgPool2d(kernel_size=(h // 32, 1))
-    #         self.proj = Conv2d(w // 32, output_len, kernel_size=1)
-    #
-    #         # self.num_output_features = self.cnn[-1][-1].bn2.num_features
-    #         self.num_output_features = self.cnn[-1][-1][-2].num_features
+            # self.num_output_features = self.cnn[-1][-1].bn2.num_features
+            self.num_output_features = self.cnn[-1][-1][-2].num_features
 
     def apply_projection(self, x):
         """Use convolution to increase width of a features.

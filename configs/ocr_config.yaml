@@ -14,7 +14,7 @@ data_params:
   input_rotation_train_path: "/kaggle/working/cv_contest/data/vk_made_ocr/inference_predictions_train.csv"
   input_rotation_val_path: "/kaggle/working/cv_contest/data/vk_made_ocr/inference_predictions_val.csv"
 
-  output_model_path: "/kaggle/working/ocr_crnn_resnet18_gru.pth"
+  output_model_path: "/kaggle/working/ocr_crnn_efficientnet_b4_gru.pth"
   output_test_metrics_path: "/kaggle/working/test_metrics.json"
   output_test_predictions_path: "/kaggle/working/test_predictions.csv"
   output_val_predictions_path: "/kaggle/working/val_predictions.csv"
@@ -29,15 +29,15 @@ model_params:
     - 320
   cnn_output_len: 100
   rnn_hidden_size: 1024
-  rnn_num_layers: 2
+  rnn_num_layers: 3
   rnn_dropout: 0.0
   rnn_bidirectional: true
 
 training_params:
   epochs_num: 10
-  train_batch_size: 256
-  test_batch_size: 512
-  val_batch_size: 512
+  train_batch_size: 32
+  test_batch_size: 32
+  val_batch_size: 32
   learning_rate: 5e-4
   factor: 0.9
   patience: 2
