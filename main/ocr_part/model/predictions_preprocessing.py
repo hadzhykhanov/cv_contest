@@ -3,6 +3,7 @@ import torch
 
 def preprocess_prediction(prediction, special_symbol="-"):
     current = ""
+    print(prediction)
     for char in prediction:
         if current == "":
             current = char

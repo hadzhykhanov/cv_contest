@@ -75,5 +75,4 @@ def save_predictions(paths, targets, preds, output_predictions_path):
         df_dict["target"] = targets
 
     df = pd.DataFrame(df_dict)
-
     df.to_csv(output_predictions_path, index=False)
