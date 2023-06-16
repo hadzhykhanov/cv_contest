@@ -204,10 +204,10 @@ class CRNN(Module):
         batch_size, _, _, _ = images.size()
 
         x = self.features_extractor(images)
-        # print(x.size())
+        print(x.size())
         x = self.sequence_predictor(x)
         # x = x.permute(1, 0, 2)
-        # print(x)
+        print(x)
         # print(x.size())
 
         if targets is not None:
