@@ -148,15 +148,6 @@ class SequencePredictor(Module):
         encoder_layer = nn.TransformerEncoderLayer(d_model=hidden_size, nhead=4)
         self.transformer_encoder = nn.TransformerEncoder(encoder_layer, num_layers=6)
 
-        # self.rnn = GRU(
-        #     input_size=input_size,
-        #     hidden_size=hidden_size,
-        #     num_layers=num_layers,
-        #     dropout=dropout,
-        #     bidirectional=bidirectional,
-        # )
-
-        # fc_in = hidden_size if not bidirectional else 2 * hidden_size
         self.fc = Linear(in_features=hidden_size, out_features=num_classes)
 
     @staticmethod
@@ -213,7 +204,7 @@ class CRNN(Module):
         batch_size, _, _, _ = images.size()
 
         x = self.features_extractor(images)
-        print(x.size())
+        # print(x.size())
         x = self.sequence_predictor(x)
 
         if targets is not None:
