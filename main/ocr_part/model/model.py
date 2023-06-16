@@ -207,8 +207,8 @@ class CRNN(Module):
         print(x.size())
         x = self.sequence_predictor(x)
         # x = x.permute(1, 0, 2)
-        print(x)
-        # print(x.size())
+        # print(x)
+        print(x.size())
 
         if targets is not None:
             log_softmax_values = log_softmax(x, dim=2)
