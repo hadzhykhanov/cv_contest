@@ -5,33 +5,32 @@ import torch.nn as nn
 from torchvision import models
 
 
-# class FeatureExtractor(Module):
-#     def __init__(self, input_size, output_len):
-#         super(self.__class__, self).__init__()
-#
-#         h, w = input_size
-#         resnet = getattr(models, "resnet18")(weights=True)
-#         self.cnn = Sequential(*list(resnet.children())[:-2])
-#
-#         self.pool = AvgPool2d(kernel_size=(h // 32, 1))
-#         self.proj = Conv2d(w // 32, output_len, kernel_size=1)
-#
-#         self.num_output_features = self.cnn[-1][-1].bn2.num_features
-
-
 class FeatureExtractor(Module):
     def __init__(self, input_size, output_len):
         super(self.__class__, self).__init__()
 
         h, w = input_size
-        resnet = getattr(models, "efficientnet_b4")(weights=True)
+        resnet = getattr(models, "resnet18")(weights=True)
         self.cnn = Sequential(*list(resnet.children())[:-2])
 
         self.pool = AvgPool2d(kernel_size=(h // 32, 1))
         self.proj = Conv2d(w // 32, output_len, kernel_size=1)
 
-        # self.num_output_features = self.cnn[-1][-1].bn2.num_features
-        self.num_output_features = self.cnn[-1][-1][-2].num_features
+        self.num_output_features = self.cnn[-1][-1].bn2.num_features
+
+    # class FeatureExtractor(Module):
+    #     def __init__(self, input_size, output_len):
+    #         super(self.__class__, self).__init__()
+    #
+    #         h, w = input_size
+    #         resnet = getattr(models, "efficientnet_b4")(weights=True)
+    #         self.cnn = Sequential(*list(resnet.children())[:-2])
+    #
+    #         self.pool = AvgPool2d(kernel_size=(h // 32, 1))
+    #         self.proj = Conv2d(w // 32, output_len, kernel_size=1)
+    #
+    #         # self.num_output_features = self.cnn[-1][-1].bn2.num_features
+    #         self.num_output_features = self.cnn[-1][-1][-2].num_features
 
     def apply_projection(self, x):
         """Use convolution to increase width of a features.
@@ -214,6 +213,7 @@ class CRNN(Module):
         batch_size, _, _, _ = images.size()
 
         x = self.features_extractor(images)
+        print(x.size())
         x = self.sequence_predictor(x)
 
         if targets is not None:
