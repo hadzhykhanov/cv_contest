@@ -206,6 +206,7 @@ class CRNN(Module):
         x = self.features_extractor(images)
         # print(x.size())
         x = self.sequence_predictor(x)
+        x = x.permute(1, 0, 2)
 
         if targets is not None:
             log_softmax_values = log_softmax(x, dim=2)
