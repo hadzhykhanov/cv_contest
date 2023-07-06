@@ -6,15 +6,12 @@ defaults:
 
 data_params:
   input_train_data_path: "/kaggle/working/train/train"
-#  input_train_data_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/train/train"
   input_val_data_path: "/kaggle/working/test/test"
-#  input_val_data_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/test/test"
   input_targets_path: "/kaggle/working/cv_contest/data/vk_made_ocr/train_labels_no_nan.csv"
-#  input_targets_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/train_labels_no_nan.csv"
   input_rotation_train_path: "/kaggle/working/cv_contest/data/vk_made_ocr/inference_predictions_train.csv"
   input_rotation_val_path: "/kaggle/working/cv_contest/data/vk_made_ocr/inference_predictions_val.csv"
 
-  output_model_path: "/kaggle/working/ocr_crnn_efficientnet_b4_gru.pth"
+  output_model_path: "/kaggle/working/ocr_crnn_efficientnetb4_gru.pth"
   output_test_metrics_path: "/kaggle/working/test_metrics.json"
   output_test_predictions_path: "/kaggle/working/test_predictions.csv"
   output_val_predictions_path: "/kaggle/working/val_predictions.csv"
@@ -34,11 +31,11 @@ model_params:
   rnn_bidirectional: true
 
 training_params:
-  epochs_num: 10
+  epochs_num: 8
   train_batch_size: 256
   test_batch_size: 256
   val_batch_size: 256
-  learning_rate: 0.1
+  learning_rate: 5e-4
   factor: 0.9
   patience: 2
   device: "cuda"

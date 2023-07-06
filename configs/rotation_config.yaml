@@ -7,7 +7,6 @@ defaults:
 train:
   data_params:
     input_data_path: "/kaggle/working/all_ocr_dataset"
-  #  input_data_path: "/Users/vladislavgadzihanov/PycharmProjects/cv_contest/data/vk_made_ocr/train/train"
 
     output_model_path: "/kaggle/working/rotation_model_efficientnet_b4.pth"
     output_metrics_path: "/kaggle/working/metrics.json"

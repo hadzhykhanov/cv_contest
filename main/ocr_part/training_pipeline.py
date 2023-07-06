@@ -95,6 +95,9 @@ def run_training(config: DictConfig):
         cnn_input_size=config.model_params.resize,
         cnn_output_len=config.model_params.cnn_output_len,
         rnn_hidden_size=config.model_params.rnn_hidden_size,
+        rnn_num_layers=config.model_params.rnn_num_layers,
+        rnn_dropout=config.model_params.rnn_dropout,
+        rnn_bidirectional=config.model_params.rnn_bidirectional,
     ).to(config.training_params.device)
 
     optimizer = torch.optim.Adam(
